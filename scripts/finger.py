@@ -20,5 +20,5 @@ for direction in finger_direction():
     elif direction  == "L":
         l += 1
     if l > 10:
-            print("right")
+            print("left")
             break
