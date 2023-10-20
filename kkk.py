@@ -4,4 +4,4 @@ from hand_detect import finger_direction
 # yield : direction ("R" | "L" | None)
 # ESC to exit
 for direction in finger_direction():
-    if d
+    print(direction)
