@@ -10,24 +10,32 @@ L=True #一つ前がLだったか
 for direction in finger_direction():
     print(direction)
     
-    if direction=="R"and R==True: #Rが続いているとき
+    if direction=="R": #Rのとき
         R=True
         L=False
+
+    elif direction=="L": #Lのとき
+        R=False
+        L=True
+
+    if direction=="R"and R==True:#Rが続いているとき
         i=i+1
         j=0
+        print(i,j)
+
         if i>=10: #Rが１０回続いたとき
             print("右方向です")
             break
-            
-            
-    elif direction=="L"and L==True: #Lが続いているとき
-        R=False
-        L=True
-        i=0
+        
+    elif direction=="L"and L==True:#Lが続いているとき
         j=j+1
-        if j>=10: #Lが１０回続いたとき
+        i=0
+        print(i,j)
+        if i>=10: #Rが１０回続いたとき
             print("左方向です")
-            break
+            break   
+        
+    
 
         
 
