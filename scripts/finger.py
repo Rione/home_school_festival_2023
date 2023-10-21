@@ -3,35 +3,26 @@ from hand_detect import finger_direction
 # args : camera_id (default: 0)
 # yield : direction ("R" | "L" | None)
 # ESC to exit
-i=0
-j=0
-R=True #一つ前がRだったか
-L=True #一つ前がLだったか
+r=0
+l=0
+count=10 #何回続いたらOKか（とりあえず１０）
 for direction in finger_direction():
     print(direction)
     
-    if direction=="R": #Rのとき
-        R=True
-        L=False
+    if direction=="R":
+        r=r+1
+        l=0 #連続でない場合を除外
+        print(r,l)#デバッグ
 
-    elif direction=="L": #Lのとき
-        R=False
-        L=True
-
-    if direction=="R"and R==True:#Rが続いているとき
-        i=i+1
-        j=0
-        print(i,j)#デバッグ
-
-        if i>=10: #Rが１０回続いたとき
+        if r>=count: #Rが１０回続いたとき
             print("右方向です")
             break
         
-    elif direction=="L"and L==True:#Lが続いているとき
-        j=j+1
-        i=0
-        print(i,j)#デバッグ
-        if j>=10: #Rが１０回続いたとき
+    elif direction=="L":
+        l=l+1
+        r=0 #連続でない場合を除外
+        print(r,l)#デバッグ
+        if l>=count: #Rが１０回続いたとき
             print("左方向です")
             break   
         
