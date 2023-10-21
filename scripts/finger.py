@@ -21,7 +21,7 @@ for direction in finger_direction():
     if direction=="R"and R==True:#Rが続いているとき
         i=i+1
         j=0
-        print(i,j)
+        print(i,j)#デバッグ
 
         if i>=10: #Rが１０回続いたとき
             print("右方向です")
@@ -30,8 +30,8 @@ for direction in finger_direction():
     elif direction=="L"and L==True:#Lが続いているとき
         j=j+1
         i=0
-        print(i,j)
-        if i>=10: #Rが１０回続いたとき
+        print(i,j)#デバッグ
+        if j>=10: #Rが１０回続いたとき
             print("左方向です")
             break   
         
