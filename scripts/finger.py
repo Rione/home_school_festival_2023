@@ -3,18 +3,15 @@ import rospy
 from std_msgs.msg import String
 from hand_detect import finger_direction
 
-
 def CreateFingerDirectionNode() -> None:
     # Configurable variables
     node_name = 'finger_direction'
     topic_name = 'finger_direction'
-    rate: int = 5       # hz
     limit: int = 10     # 連続でデータを受け取る回数
 
     # Node publisher
     pub = rospy.Publisher(topic_name, String, queue_size=1)
     rospy.init_node(node_name, anonymous=True)
-    rate = rospy.Rate(rate)
 
     # Initialization
     counter_L = 0
@@ -43,10 +40,8 @@ def CreateFingerDirectionNode() -> None:
             counter_L = 0
             counter_R = 0
 
-    while not rospy.is_shutdown():
-        rospy.loginfo(f"Direction: {result}")
-        pub.publish(result)
-        rate.sleep()
+    rospy.loginfo(f"Direction: {result}")
+    pub.publish(result) # Publish a topic regardless of the subscriber already established or not
 
 if __name__ == '__main__':
     try:

@@ -1,10 +1,24 @@
 #!/usr/bin/env python3
 import rospy
-from std_msgs.msg import String
+import time
+from Controller import Controller
 
 def main() -> None:
-    rospy.init_node('controller', anonymous=True)
-    rospy.Subscriber("finger_direction", String, FingerDirectionCallback)
+    ctrl = Controller()
 
-    rospy.spin()
+    ctrl.setBagColor()
+    ctrl.setDirection()
+    rospy.loginfo('>> Listening to the color and direction.')
 
+    # Wait for both color and direction
+    while(ctrl.bagColor == None or ctrl.direction == None):
+        time.sleep(0.1)
+
+    #----WIP-------------------------------------
+    
+
+if __name__ == '__main__':
+    try:
+        main()
+    except rospy.ROSInterruptException:
+        pass
