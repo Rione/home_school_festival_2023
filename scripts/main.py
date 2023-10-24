@@ -3,14 +3,15 @@ import rospy
 import time
 from Controller import Controller
 
-def main() -> None:
+def main():
+    # Create an instance
     ctrl = Controller()
 
-    ctrl.setBagColor()
-    ctrl.setDirection()
-    rospy.loginfo('>> Listening to the color and direction.')
+    ctrl.ListenToBagColor()
+    ctrl.ListenToDirection()
+    rospy.loginfo('Listening to audio_processing and finger_direction.')
 
-    # Wait for both color and direction
+    # Wait for both color and direction to be specified
     while(ctrl.bagColor == None or ctrl.direction == None):
         time.sleep(0.1)
 
@@ -21,4 +22,4 @@ if __name__ == '__main__':
     try:
         main()
     except rospy.ROSInterruptException:
-        pass
+        rospy.logerr("An exception has been occurred during the execution.")
