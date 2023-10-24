@@ -2,7 +2,7 @@
 import rospy
 from std_msgs.msg import String
 from online_audio_kit import AudioKit
-from gpt import GptApi
+from GptApi import GptApi
 
 def CreateAudioProcessingNode():
     # Configurable variables
@@ -28,7 +28,7 @@ def CreateAudioProcessingNode():
                 audio.tts("不具合が発生しました。プロセスを終了します。")
                 exit()
         else: break  
-        
+
     audio.tts(f"わかりました。{'茶' if color == 'brown' else '白'}色の紙袋をお持ちします。")
 
     rospy.loginfo(f"Set bagColor to '{color}'")
