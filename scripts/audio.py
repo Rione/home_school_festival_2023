@@ -1,1 +1,1 @@
-ohayou
+print("asitaha oyasumi")
