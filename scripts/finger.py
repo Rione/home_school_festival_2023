@@ -9,8 +9,8 @@ from std_msgs.msg import String
 r=0
 l=0
 count=10 #何回続いたらOKか（とりあえず１０）
-rospy.init_node("finger")
-pub = rospy.Publisher("direction", String, queue_size=1)
+rospy.init_node("finger_node")
+pub = rospy.Publisher("topic_direction", String, queue_size=1)
 Direction ="None"
 for direction in finger_direction():
     print(direction)
