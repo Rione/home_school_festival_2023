@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from hand_detect import finger_direction
+from online_audio_kit import AudioKit
 import rospy
 from std_msgs.msg import String
 #rate = rospy.Rate(10)
@@ -12,33 +13,43 @@ count=10 #何回続いたらOKか（とりあえず１０）
 rospy.init_node("finger_node")
 pub = rospy.Publisher("topic_direction", String, queue_size=1)
 Direction ="None"
-for direction in finger_direction():
-    print(direction)
-    
-    if direction=="R":
-        r=r+1
-        l=0 #連続でない場合を除外
-        print(r,l)#デバッグ
 
-        if r>=count: #Rが１０回続いたとき
-            print("右方向です")
-            Direction="right"
-            pub.publish(Direction)#方向をpublish
+def right_or_left():
+    global r
+    global l
+    for direction in finger_direction():
+            print(direction)
+            
+            if direction=="R":
+
+                r=r+1
+                l=0 #連続でない場合を除外
+                print(r,l)#デバッグ
+
+                if r>=count: #Rが１０回続いたとき
+                    print("右方向です")
+                    Direction="right"
+                    pub.publish(Direction)#方向をpublish
+                        
+                    break
                 
-            break
-        
-    elif direction=="L":
-        l=l+1
-        r=0 #連続でない場合を除外
-        print(r,l)#デバッグ
+            elif direction=="L":
+                l=l+1
+                r=0 #連続でない場合を除外
+                print(r,l)#デバッグ
 
-        if l>=count: #Rが１０回続いたとき
-            print("左方向です")
-            Direction="left"
-            pub.publish(Direction)#方向をpublish
-            break   
+                if l>=count: #Rが１０回続いたとき
+                    print("左方向です")
+                    Direction="left"
+                    pub.publish(Direction)#方向をpublish
+                    break   
         
-    
+if __name__ == '__main__':
+    try:
+        right_or_left()
+    except rospy.ROSInterruptException:
+        pass
+
 
         
 

@@ -12,26 +12,31 @@ Color ="None"
 
 
 def white_or_brown():
-    for text in audio.vosk():
-        if "白" in text:
-            Color="white"
-            print("白です")
-            pub.publish(Color)#色をpublish
-            break
-        elif"茶色" in text:
-            Color="brown"
-            print("茶色です")
-            pub.publish(Color)#色をpublish
-            break
-        else:
-            continue
+    global Color
+    audio.tts("紙袋の色を教えてください")
+    while(1):
+                text=audio.stt()
+                if "白" in text:
+                    Color="white"
+                    print("白です")
+                    pub.publish(Color)#色をpublish
+                    break
+                elif"茶色" in text:
+                    Color="brown"
+                    print("茶色です")
+                    pub.publish(Color)#色をpublish
+                    break
+                else:
+                    audio.tts("もう一度お願いします")
+                    continue
+
 
 if __name__ == '__main__':
-    while not rospy.is_shutdown():
+    try:
         white_or_brown()
-        break
-    
-    
+    except rospy.ROSInterruptException:
+        pass
+
 
 
 

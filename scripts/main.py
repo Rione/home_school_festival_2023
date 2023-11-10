@@ -7,36 +7,47 @@ color_fin=False
 
 
 def dir(direction):
-  print("方向を受信しました")
-  print(direction)
   global direction_fin
+  if direction_fin==False:
+    print("方向を受信しました")
+    print(direction)
+  
 
   if direction.data=="right":
+
     direction_fin=True
 
   elif direction.data=="left":
+
     direction_fin=True
+
 
 
 def col(color):
   global color_fin
-  print("色を受信しました")
-  print(color)
+  if color_fin==False:
+    print("色を受信しました")
+    print(color)
   if color.data=="brown":
-    print("brown")
     color_fin=True
 
   elif color.data=="white":
-    print("white")
     color_fin=True
 
-while not rospy.is_shutdown():
-  sub=rospy.Subscriber("topic_direction",String,dir)
-  sub=rospy.Subscriber("topic_color",String,col)
-  if (direction_fin==True and color_fin==True):
-    break
-print("色と方向がわかりました")   
 
+
+if __name__ == '__main__':
+    while not rospy.is_shutdown():
+      try:
+          if (direction_fin==False):
+              rospy.Subscriber("topic_direction",String,dir)
+          if (color_fin==False):
+              rospy.Subscriber("topic_color",String,col)
+          if (direction_fin==True and color_fin==True):
+              print("色と方向がわかりました")
+              break
+      except rospy.ROSInterruptException:
+            pass
   
 
   
