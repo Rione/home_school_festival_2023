@@ -5,8 +5,8 @@ from hand_detect import finger_direction
 
 def CreateFingerDirectionNode() -> None:
     # Configurable variables
-    node_name = 'finger_direction'
-    topic_name = 'finger_direction'
+    node_name = 'finger_node'
+    topic_name = 'topic_direction'
     limit: int = 10     # 連続でデータを受け取る回数
 
     # Node publisher
