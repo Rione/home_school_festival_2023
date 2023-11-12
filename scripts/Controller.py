@@ -13,10 +13,10 @@ class Controller():
         """
         Override current bag color.
         """
-        self.bagColor = rospy.wait_for_message('audio_processing', String, timeout=None)
+        self.bagColor = rospy.wait_for_message('topic_color', String, timeout=None)
 
     def ListenToDirection(self):
         """
         Override current direction.
         """
-        self.direction = rospy.wait_for_message('finger_direction', String, timeout=None)
+        self.direction = rospy.wait_for_message('topic_direction', String, timeout=None)
