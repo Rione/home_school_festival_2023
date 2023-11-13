@@ -3,12 +3,12 @@ import rospy
 from std_msgs.msg import String
 from hand_detect import finger_direction
 
-def CreateFingerDirectionNode() -> None:
-    # Configurable variables
-    node_name = 'finger_node'
-    topic_name = 'topic_direction'
-    limit: int = 10     # 連続でデータを受け取る回数
+# Configurable variables
+node_name = 'finger_node'
+topic_name = 'topic_direction'
+limit: int = 10     # 連続でデータを受け取る回数
 
+def CreateFingerDirectionNode() -> None:
     # Node publisher
     pub = rospy.Publisher(topic_name, String, queue_size=1)
     rospy.init_node(node_name, anonymous=True)

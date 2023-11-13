@@ -9,11 +9,13 @@ def main():
 
     ctrl.ListenToBagColor()
     ctrl.ListenToDirection()
-    rospy.loginfo('Listening to audio_processing and finger_direction.')
+    print('Listening to topic_color and topic_direction.')
 
     # Wait for both color and direction to be specified
     while(ctrl.bagColor == None or ctrl.direction == None):
         time.sleep(0.1)
+
+    ctrl.MoveTo(0)
 
     #----WIP-------------------------------------
     

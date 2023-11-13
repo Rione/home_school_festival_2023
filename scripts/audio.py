@@ -4,11 +4,11 @@ import time
 from std_msgs.msg import String
 from online_audio_kit import AudioKit
 
-def CreateAudioProcessingNode():
-    # Configurable variables
-    node_name = 'audio_node'
-    topic_name = 'topic_color'
+# Configurable variables
+node_name = 'audio_node'
+topic_name = 'topic_color'
 
+def CreateAudioProcessingNode():
     # Node publisher
     pub = rospy.Publisher(topic_name, String, queue_size=1)
     rospy.init_node(node_name, anonymous=True)
