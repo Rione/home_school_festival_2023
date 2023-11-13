@@ -31,16 +31,16 @@ def CreateFingerDirectionNode() -> None:
                 counter_R += 1
 
             if(counter_L >= limit):
-                result =  'L'
+                result =  'left'
                 break
             elif(counter_R >= limit):
-                result =  'R'
+                result =  'right'
                 break
         else: # Reset counters
             counter_L = 0
             counter_R = 0
 
-    rospy.loginfo(f"Direction: {result}")
+    rospy.loginfo(f"[Debug] Direction: {result}")
     pub.publish(result) # Publish a topic regardless of the subscriber already established or not
 
 if __name__ == '__main__':
