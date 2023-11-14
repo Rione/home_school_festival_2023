@@ -35,7 +35,8 @@ def move_base_client(x, y, yaw):
     return client.get_result()
 
 def MoveToTarget(data):
-    rospy.loginfo(f"[Debug] The target is {data.data}.")
+    pub = rospy.Publisher('topic_end_nav', String, queue_size=1)
+    rospy.logdebug(f"[Debug] The target is {data.data}.")
 
     if(data.data == 'origin'):
         target_pos = GOAL_POS[0]
@@ -45,7 +46,8 @@ def MoveToTarget(data):
         target_pos = GOAL_POS[2]
 
     result = move_base_client(target_pos[0], target_pos[1], target_pos[2])
-    rospy.loginfo(result)
+    rospy.logdebug(f"[Debug] result: {result}")
+    pub.publish(result)
 
 def listener():
     rospy.init_node("send_goal_node", anonymous=True)
