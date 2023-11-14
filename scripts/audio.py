@@ -5,14 +5,10 @@ import time
 from std_msgs.msg import String
 from online_audio_kit import AudioKit
 
-# Configurable variables
-node_name = 'audio_node'
-topic_name = 'topic_color'
-
 def CreateAudioProcessingNode():
-    # Node publisher
-    pub = rospy.Publisher(topic_name, String, queue_size=1)
-    rospy.init_node(node_name, anonymous=True)
+    # Node and publisher
+    pub = rospy.Publisher('topic_color', String, queue_size=1)
+    rospy.init_node('audio_node', anonymous=True)
 
     # Create an instance of AudioKit
     audio = AudioKit('ja') # Option : AudioKit(language= 'ja' | 'en', openai_api_key=str)
@@ -32,7 +28,7 @@ def CreateAudioProcessingNode():
     time.sleep(2)
     audio.tts(f"わかりました。{'茶' if color == 'brown' else '白'}色の紙袋をお持ちします。")
 
-    rospy.loginfo(f"[Debug] Set bagColor to '{color}'")
+    rospy.loginfo(f"[Debug] Set color to: '{color}'")
     pub.publish(color) # Publish a topic regardless of the subscriber already established or not
 
 if __name__ == '__main__':
