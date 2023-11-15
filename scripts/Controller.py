@@ -41,6 +41,7 @@ class Controller():
         """
         Handle the arrival at the 1st target.
         """
+        ## WIP
         rospy.logdebug('[Debug] Arrived at the 1st designated target.')
         rospy.logdebug('[Debug] Start navigation to the next target soon.')
 
@@ -48,6 +49,7 @@ class Controller():
         """
         Handle the arrival at the 2nd target.
         """
+        ## WIP
         rospy.logdebug('[Debug] Arrived at the 2nd designated target.')
         rospy.logdebug('[Debug] Start navigation to the next target soon.')
 

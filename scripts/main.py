@@ -27,7 +27,7 @@ def main():
 
     ctrl.PublishTopicMove(0) # Return to the Origin
 
-    print('[Debug] Programme terminated.')
+    print('[Debug] Program terminated.')
     
 
 if __name__ == '__main__':
