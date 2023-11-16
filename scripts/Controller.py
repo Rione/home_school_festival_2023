@@ -1,4 +1,5 @@
 import rospy
+import time
 from std_msgs.msg import String
 
 class Controller():
@@ -27,13 +28,17 @@ class Controller():
         """
         Publish topic_move; move to the target
         """
-        pub = rospy.Publisher('topic_move', String, queue_size=1)
-        if(target == 0): result = 'origin'
+        pub_move = rospy.Publisher('topic_move', String, queue_size=1)
+        pub_tts = rospy.Publisher('topic_tts', String, queue_size=1)
+        if(target == 0): 
+            result = 'origin'
+            pub_tts.publish("ホームに戻ります")
+            time.sleep(3)
         elif(target == 1): result = 'target1'
         elif(target == 2): result = 'target2'
         else: rospy.logdebug('[Debug] Wrong argument given.')
 
-        pub.publish(result)
+        pub_move.publish(result)
 
         rospy.logdebug('[Debug] result: ' + rospy.wait_for_message('topic_end_nav', String, timeout=None))
 
@@ -42,6 +47,8 @@ class Controller():
         Handle the arrival at the 1st target.
         """
         ## WIP
+        pub_tts = rospy.Publisher('topic_tts', String, queue_size=1)
+        pub_tts.publish("第一目標に到達しました。")
         rospy.logdebug('[Debug] Arrived at the 1st designated target.')
         rospy.logdebug('[Debug] Start navigation to the next target soon.')
 
@@ -50,6 +57,8 @@ class Controller():
         Handle the arrival at the 2nd target.
         """
         ## WIP
+        pub_tts = rospy.Publisher('topic_tts', String, queue_size=1)
+        pub_tts.publish("第二目標に到達しました。")
         rospy.logdebug('[Debug] Arrived at the 2nd designated target.')
         rospy.logdebug('[Debug] Start navigation to the next target soon.')
 
