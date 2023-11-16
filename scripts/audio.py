@@ -5,13 +5,14 @@ import time
 from std_msgs.msg import String
 from online_audio_kit import AudioKit
 
+# Create an instance of AudioKit
+audio = AudioKit('ja') # Option : AudioKit(language= 'ja' | 'en', openai_api_key=str)
+
 def CreateAudioProcessingNode():
     # Node and publisher
     pub = rospy.Publisher('topic_color', String, queue_size=1)
     rospy.init_node('audio_node', anonymous=True)
-
-    # Create an instance of AudioKit
-    audio = AudioKit('ja') # Option : AudioKit(language= 'ja' | 'en', openai_api_key=str)
+   
     audio.tts("こんにちは。何色の紙袋をお持ちしましょうか?")
     
     for i, text in enumerate(audio.vosk()):
@@ -31,9 +32,14 @@ def CreateAudioProcessingNode():
     rospy.loginfo(f"[Debug] Set color to: '{color}'")
     pub.publish(color) # Publish a topic regardless of the subscriber already established or not
 
+def TextToSpeech(data):
+    audio.tts(data.data)
+
 if __name__ == '__main__':
     try:
         CreateAudioProcessingNode()
+        rospy.Subscriber("topic_tts", String, TextToSpeech)
+        rospy.spin()
     except rospy.ROSInterruptException:
         pass
 
