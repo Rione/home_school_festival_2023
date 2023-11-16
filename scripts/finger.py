@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import rospy
+import time
 from std_msgs.msg import String
 from hand_detect import finger_direction
 
@@ -9,12 +10,16 @@ limit: int = 10     # How many times to receive data from hand_detect
 
 def CreateFingerDirectionNode() -> None:
     # Node and publisher
-    pub = rospy.Publisher('topic_direction', String, queue_size=1)
+    pub_direction = rospy.Publisher('topic_direction', String, queue_size=1)
+    pub_tts = rospy.Publisher('topic_tts', String, queue_size=1)
     rospy.init_node('finger_node', anonymous=True)
 
     # Initialization
     counter_L = 0
     counter_R = 0
+
+    pub_tts("行きたい方向を指さしてください。")
+    time.sleep(3)
 
     # Main
     for direction in finger_direction():
@@ -40,7 +45,9 @@ def CreateFingerDirectionNode() -> None:
             counter_R = 0
 
     rospy.loginfo(f"[Debug] Set direction to: {result}")
-    pub.publish(result) # Publish a topic regardless of the subscriber already established or not
+    pub_tts("わかりました。")
+    time.sleep(3)
+    pub_direction.publish(result) # Publish a topic regardless of the subscriber already established or not
 
 if __name__ == '__main__':
     try:
