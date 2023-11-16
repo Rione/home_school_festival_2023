@@ -18,7 +18,7 @@ def CreateFingerDirectionNode() -> None:
     counter_L = 0
     counter_R = 0
 
-    pub_tts("行きたい方向を指さしてください。")
+    pub_tts("行きたい方向を指してください。")
     time.sleep(3)
 
     # Main
@@ -44,7 +44,7 @@ def CreateFingerDirectionNode() -> None:
             counter_L = 0
             counter_R = 0
 
-    rospy.loginfo(f"[Debug] Set direction to: {result}")
+    rospy.logdebug(f"[Debug] Set direction to: {result}")
     pub_tts("わかりました。")
     time.sleep(3)
     pub_direction.publish(result) # Publish a topic regardless of the subscriber already established or not

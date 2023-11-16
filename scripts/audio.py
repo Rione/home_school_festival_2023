@@ -29,7 +29,7 @@ def CreateAudioProcessingNode():
     time.sleep(2)
     audio.tts(f"わかりました。{'茶' if color == 'brown' else '白'}色の紙袋をお持ちします。")
 
-    rospy.loginfo(f"[Debug] Set color to: '{color}'")
+    rospy.logdebug(f"[Debug] Set color to: '{color}'")
     pub.publish(color) # Publish a topic regardless of the subscriber already established or not
 
 def TextToSpeech(data):
