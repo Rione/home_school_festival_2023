@@ -3,6 +3,7 @@ from hand_detect import finger_direction
 from online_audio_kit import AudioKit
 import rospy
 from std_msgs.msg import String
+import time
 #rate = rospy.Rate(10)
 # args : camera_id (default: 0)
 # yield : direction ("R" | "L" | None)
@@ -46,9 +47,12 @@ def right_or_left():
         
 if __name__ == '__main__':
     try:
+        time.sleep(10)
+        rospy.loginfo("方向入力を開始します。")
         right_or_left()
-    except rospy.ROSInterruptException:
+    except rospy.ROSInterruptException or KeyboardInterrupt:
         pass
+
 
 
         

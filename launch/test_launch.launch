@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="home_school_festival_2023" name="test_node" type="audio_and_finger.py" output="screen"/>
+    <node pkg="home_school_festival_2023" name="audio_node" type="audio.py" output="screen"/>
+    <node pkg="home_school_festival_2023" name="finger_node" type="finger.py" output="screen"/>
+</launch>

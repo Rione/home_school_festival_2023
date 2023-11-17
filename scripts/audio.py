@@ -2,6 +2,7 @@
 from online_audio_kit import AudioKit
 import rospy
 from std_msgs.msg import String
+import time
 audio = AudioKit(language="ja")
 #res=audio.stt()
 #print(res)
@@ -13,7 +14,7 @@ Color ="None"
 
 def white_or_brown():
     global Color
-    audio.tts("紙袋の色を教えてください")
+
     while(1):
                 text=audio.stt()
                 if "白" in text:
@@ -33,8 +34,12 @@ def white_or_brown():
 
 if __name__ == '__main__':
     try:
-        white_or_brown()
-    except rospy.ROSInterruptException:
+        time.sleep(30)
+        rospy.loginfo("音声入力を開始します")
+        #white_or_brown()
+        Color="white"#テスト用変更　あとで絶対直す！
+        pub.publish(Color)#上に同じ
+    except rospy.ROSInterruptException or KeyboardInterrupt:
         pass
 
 
