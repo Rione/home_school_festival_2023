@@ -36,9 +36,9 @@ if __name__ == '__main__':
     try:
         time.sleep(30)
         rospy.loginfo("音声入力を開始します")
-        #white_or_brown()
-        Color="white"#テスト用変更　あとで絶対直す！
-        pub.publish(Color)#上に同じ
+        white_or_brown()
+        #Color="white"#テスト用変更　あとで絶対直す！
+        #pub.publish(Color)#上に同じ
     except rospy.ROSInterruptException or KeyboardInterrupt:
         pass
 
