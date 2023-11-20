@@ -2,10 +2,10 @@
 
 import rospy
 import actionlib
+import numpy as np
 from std_msgs.msg import String
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 
-import numpy as np
 
 GOAL_POS = [
     [0, 0, 0],  # Origin
@@ -44,11 +44,13 @@ def MoveToTarget(data, pub):
     elif(data.data == 'target2'):
         target_pos = GOAL_POS[2]
 
+    rospy.loginfo(f"[Info] Moving to {target_pos}.")
+    # Wait for the navigation to finish
     result = move_base_client(target_pos[0], target_pos[1], target_pos[2])
     rospy.logdebug(f"[Debug] result: {result}")
     pub.publish(result)
 
-def listener():
+def CreateSendGoalNode():
     rospy.init_node("send_goal_node", anonymous=True)
     pub = rospy.Publisher('topic_end_nav', String, queue_size=1)
     rospy.Subscriber("topic_move", String, MoveToTarget, pub)
@@ -56,6 +58,6 @@ def listener():
 
 if __name__ == "__main__":
     try:
-        listener()
+        CreateSendGoalNode()
     except rospy.ROSInterruptException:
         pass
