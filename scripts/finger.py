@@ -45,7 +45,7 @@ def right_or_left():
                     Direction="left"
                     pub.publish(Direction)#方向をpublish
                     break  
-            elif start-time.time()>=15:
+            elif time.time()-start>=15:
                 audio.tts("すみません、もう一度方向を教えてください") 
                 start=time.time()
         
