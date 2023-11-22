@@ -19,27 +19,29 @@ def white_or_brown():
                 text=audio.stt()
                 if "白" in text:
                     Color="white"
-                    audio.tts("紙袋の色がわかりました。しろ色ですね。")
                     print("白です")
                     pub.publish(Color)#色をpublish
                     break
                 elif"茶色" in text:
                     Color="brown"
-                    audio.tts("紙袋の色がわかりました。茶色ですね。")
                     print("茶色です")
                     pub.publish(Color)#色をpublish
                     break
-                else:
-                    audio.tts("もう一度お願いします")
-                    continue
+                # else:
+                #     audio.tts("もう一度お願いします")
+                #     continue
 
 
 if __name__ == '__main__':
     try:
-        rospy.wait_for_message("start_audio", String)
-        rospy.loginfo("紙袋の色を教えてください")
+        time.sleep(8)
         rospy.loginfo("音声入力を開始します")
         white_or_brown()
 
     except rospy.ROSInterruptException or KeyboardInterrupt:
         pass
+
+
+
+
+

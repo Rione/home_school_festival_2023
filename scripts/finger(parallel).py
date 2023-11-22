@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 from hand_detect import finger_direction
 from online_audio_kit import AudioKit
-audio = AudioKit(language="ja")
 import rospy
 from std_msgs.msg import String
 import time
-start=time.time()
 #rate = rospy.Rate(10)
 # args : camera_id (default: 0)
 # yield : direction ("R" | "L" | None)
@@ -31,7 +29,6 @@ def right_or_left():
 
                 if r>=count: #Rが１０回続いたとき
                     print("右方向です")
-                    audio.tts("方向がわかりました。右方向ですね。")
                     Direction="right"
                     pub.publish(Direction)#方向をpublish
                         
@@ -44,18 +41,19 @@ def right_or_left():
 
                 if l>=count: #Rが１０回続いたとき
                     print("左方向です")
-                    audio.tts("方向がわかりました。左方向ですね。")
                     Direction="left"
                     pub.publish(Direction)#方向をpublish
-                    break  
-            elif start-time.time()>=15:
-                audio.tts("すみません、もう一度方向を教えてください") 
+                    break   
         
 if __name__ == '__main__':
     try:
-        rospy.wait_for_message("start_finger", String)
-        audio.tts("方向を指さして教えてください。")
+        time.sleep(8)
         rospy.loginfo("方向入力を開始します。")
         right_or_left()
     except rospy.ROSInterruptException or KeyboardInterrupt:
         pass
+
+
+
+        
+
