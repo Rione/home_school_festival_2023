@@ -4,31 +4,42 @@ import rospy
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from std_msgs.msg import String
-import time
 import numpy as np
+import time
+PUB="***"
 
 
-GOAL_POS=[0,0,0]
+GOAL_POS=[0,0,0]#初期化
+Target1=[1,1,1]#右の人
+Target2=[2,2,2]#左の人
+Origin=[0,0,0]#もといた場所
 
-rospy.init_node("send_goal_node")
+rospy.init_node("test_send_goal_node",anonymous=True)
+pub=rospy.Publisher("topic_fin", String, queue_size=1)
 #change here
-def set_goal(target):
-    print(target.data)
+def set_goal(target):#受け取ったトピックに合わせて目標設定
     global GOAL_POS
     global start
     if(target.data=="target1"):
-        GOAL_POS = [1,1,1]
+        GOAL_POS = Target1
     elif(target.data=="target2"):
-        GOAL_POS = [2,2,2]
+        GOAL_POS = Target2
     elif(target.data=="origin"):
-        GOAL_POS = [3,3,3]
+        GOAL_POS = Origin
     else:
         GOAL_POS = [0 ,0, 0]
 
     print(GOAL_POS)
-    #result = move_base_client(GOAL_POS[0], GOAL_POS[1], GOAL_POS[2])
-    print(f"{target}が終わりました")
-    #rospy.loginfo(result)
+    print(f"{target}を開始します")
+    print(f"{GOAL_POS[0], GOAL_POS[1], GOAL_POS[2]}に移動します")
+    result = move_base_client(GOAL_POS[0], GOAL_POS[1], GOAL_POS[2])#デバッグ時コメントアウト
+    rospy.loginfo(result)#デバッグ時コメントアウト
+    print("fin送信")
+    for i in range(10):
+        pub.publish(PUB)
+        time.sleep(0.1)
+
+    
 
 
 
@@ -64,6 +75,7 @@ def move_base_client(x, y, yaw):
 if __name__ == "__main__":
     
     sub=rospy.Subscriber("topic_move",String,set_goal)
+    
     rospy.spin()
 
 

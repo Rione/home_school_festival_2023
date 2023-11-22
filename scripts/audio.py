@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 from online_audio_kit import AudioKit
 import rospy
-from std_msgs.msg import String
 import time
+from std_msgs.msg import String
 audio = AudioKit(language="ja")
-#res=audio.stt()
-#print(res)
-rospy.init_node("audio_node")
+rospy.init_node("audio_node",anonymous=True)
 pub = rospy.Publisher("topic_color", String, queue_size=1)
 Color ="None"
 
@@ -36,10 +34,14 @@ def white_or_brown():
 
 if __name__ == '__main__':
     try:
-        rospy.wait_for_message("start_audio", String)
-        rospy.loginfo("紙袋の色を教えてください")
+        print("audioファイル読み込み")
+        rospy.wait_for_message("topic_start_audio", String)
+        print("音声開始")
+        audio.tts("紙袋の色を教えてください")
         rospy.loginfo("音声入力を開始します")
-        white_or_brown()
+        white_or_brown()#デバッグ時コメントアウト
+        time.sleep(2)
+        #pub.publish("white") #テスト用
 
     except rospy.ROSInterruptException or KeyboardInterrupt:
         pass
