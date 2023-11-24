@@ -14,6 +14,9 @@ class Controller():
         self.color: str = None    # 紙袋の色
         self.direction: str = None   # 進行方向
 
+        rospy.loginfo("[Info] Setting up...")
+        time.sleep(3)
+
         # Publishers
         self.pub_mov = rospy.Publisher('topic_move', String, queue_size=1)
         self.pub_tts = rospy.Publisher('topic_tts', String, queue_size=1)
