@@ -1,6 +1,6 @@
 <launch>
-    <node pkg="home_school_festival_2023" name="main_node" type="main" output="screen"/>
     <node pkg="home_school_festival_2023" name="finger_node" type="finger" output="screen"/>
     <node pkg="home_school_festival_2023" name="audio_node" type="audio" output="screen"/>
     <node pkg="home_school_festival_2023" name="send_goal_node" type="send_goal" output="screen"/>
+    <node pkg="home_school_festival_2023" name="main_node" type="main" output="screen"/>
 </launch>
