@@ -42,11 +42,11 @@ def CreateFingerDirectionNode() -> None:
             counter_L = 0
             counter_R = 0
 
-    rospy.logdebug(f"[Debug] Set direction to: {result}")
+    rospy.loginfo(f"[Debug] Set direction to: {result}")
 
     if(result != None):
         pub_dir.publish(result) # Publish a topic without waiting for the subscriber being established
-    else: rospy.logerr("[Error] The direction is not given. Please try again.")
+    else: rospy.loginfo("[Error] The direction is not given. Please try again.")
 
 if __name__ == '__main__':
     try:
