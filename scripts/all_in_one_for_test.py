@@ -15,10 +15,10 @@ GOAL_POS = [0,0, 0]
 r=0
 l=0
 count=10 #何回続いたらOKか（とりあえず１０）
-Target1=(1,1,1)#右の人
-Target2=(2,2,2)#左の人
-Origin=(0,0,0)#もといた場所
-start=time.time()
+Target1=(-2.9,0.135,0.002)#右の人
+Target2=(0.617,-0.271,0.002)#左の人
+Origin=(0.220,0.715,0.002)#もといた場所
+
 
 def change_goal(a,b,c):
     global GOAL_POS
@@ -56,8 +56,8 @@ def send_goal():
     rospy.spin()
 
 def finger():
+    start=time.time()
     audio.tts("方向を指さして教えてください。")
-    global start
     global r
     global l
     for direction in finger_direction():

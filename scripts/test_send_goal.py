@@ -19,7 +19,6 @@ pub=rospy.Publisher("topic_fin", String, queue_size=1)
 #change here
 def set_goal(target):#受け取ったトピックに合わせて目標設定
     global GOAL_POS
-    global start
     if(target.data=="target1"):
         GOAL_POS = Target1
     elif(target.data=="target2"):
@@ -34,20 +33,12 @@ def set_goal(target):#受け取ったトピックに合わせて目標設定
     print(f"{GOAL_POS[0], GOAL_POS[1], GOAL_POS[2]}に移動します")
     result = move_base_client(GOAL_POS[0], GOAL_POS[1], GOAL_POS[2])#デバッグ時コメントアウト
     rospy.loginfo(result)#デバッグ時コメントアウト
+    rospy.spin()
     print("fin送信")
     for i in range(10):
         pub.publish(PUB)
         time.sleep(0.1)
-
     
-
-
-
-
-    
-
-
-
 def move_base_client(x, y, yaw):
     client = actionlib.SimpleActionClient("move_base", MoveBaseAction)
     client.wait_for_server()
@@ -70,13 +61,9 @@ def move_base_client(x, y, yaw):
     return client.get_result()
 
 
-
-
 if __name__ == "__main__":
-    
     sub=rospy.Subscriber("topic_move",String,set_goal)
     
-    rospy.spin()
 
 
 
