@@ -51,6 +51,7 @@ def CreateFingerDirectionNode() -> None:
 if __name__ == '__main__':
     try:
         CreateFingerDirectionNode()
+        rospy.Subscriber("topic_direction", String, finger_direction)
     except rospy.ROSInterruptException:
         pass
 
