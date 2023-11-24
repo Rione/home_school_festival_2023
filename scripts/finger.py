@@ -16,7 +16,7 @@ def CreateFingerDirectionNode() -> None:
     pub_tts.publish("ask_direction")
     time.sleep(3)   # Wait for the audio to stop
 
-    limit: int = 50     # How many times to receive data from hand_detect
+    limit: int = 50     # How many times to receive data from hand_detect until stop
 
     while not rospy.is_shutdown():
         counter_L = 0
