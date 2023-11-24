@@ -45,9 +45,9 @@ if __name__ == '__main__':
             target="target1"
         else:
             target="target2"
-        
-        pub_send_goal.publish(target)#移動１回目起動
-        time.sleep(0.1)
+        for i in range(2):
+            pub_send_goal.publish(target)#移動１回目起動
+            time.sleep(0.1)
 
         rospy.wait_for_message("topic_fin", String)#移動１回目終了まで待機
         print("finトピック受信")
@@ -61,17 +61,18 @@ if __name__ == '__main__':
         else:
             target="target1"
         
-
-        pub_send_goal.publish(target)#移動２回目起動
-        time.sleep(0.1)
+        for i in range(2):
+            pub_send_goal.publish(target)#移動２回目起動
+            time.sleep(0.1)
         rospy.wait_for_message("topic_fin", String)#移動２回目終了まで待機
 
         audio.tts(f"{Color}の紙袋を持ってきました")
         
         res_check()#紙袋受け取り確認
 
-        pub_send_goal.publish("origin")#移動３回目起動
-        time.sleep(0.1)
+        for i in range(2):
+            pub_send_goal.publish("origin")#移動３回目起動
+            time.sleep(0.1)
         
         
     except rospy.ROSInterruptException or KeyboardInterrupt:
