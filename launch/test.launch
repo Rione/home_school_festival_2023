@@ -1,4 +1,12 @@
 <launch>
+    <arg name="map_file" default="$HOME/map/bushitu.yaml"/>
+
+    <include file="$(find nav_lecture)/launch/minimal.launch" />
+    <include file="$(find nav_lecture)/launch/rplidar.launch" />
+    <include file="$(find nav_lecture)/launch/navigation.launch map_file:=" >
+        <arg name="map_file" default="$HOME/map/bushitu.yaml"/>
+    </include>
+
     <node pkg="home_school_festival_2023" name="finger_node" type="finger" output="screen"/>
     <node pkg="home_school_festival_2023" name="audio_node" type="audio" output="screen"/>
     <node pkg="home_school_festival_2023" name="send_goal_node" type="send_goal" output="screen"/>
