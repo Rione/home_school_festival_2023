@@ -2,6 +2,7 @@
 
 import rospy
 import time
+import subprocess
 from std_msgs.msg import String
 from online_audio_kit import AudioKit
 
@@ -44,7 +45,7 @@ def TextToSpeech(obj, audio):
     """
     Take an object as the parameter; object.data = "{name_of_the_audio_file}" 
     """
-    prefix = "../voice/" # Configure here to change directory to load audio from
+    prefix = (subprocess.run("find ~/catkin_ws/src/home_school_festival_2023 -name voice", shell=True, capture_output=True, text=True)).stdout + '/' # Configure here to change directory to load audio from
     try:
         audio.play(prefix + obj["data"] + '.mp3')
     except TypeError:
