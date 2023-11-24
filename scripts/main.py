@@ -8,10 +8,9 @@ def main():
     ctrl: Controller = Controller()
 
     # Wait for color and direction being given
-    print('[Info] Listening to topic_color.')
-    ctrl.ListenToTopicColor()
-    print('[Info] Listening to topic_direction.')
-    ctrl.ListenToTopicDirection()
+    print('[Info] Listening to topic_color and topic_direction.')
+    ctrl.ListenToBothTopics()
+    print('[Info] Moving to the target...')
     
     # Move to the first target
     ctrl.PublishTopicMove(1 if(ctrl.direction == 'left') else 2) # Left to 1, right to 2
