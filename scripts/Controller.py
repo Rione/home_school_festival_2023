@@ -18,6 +18,7 @@ class Controller():
         self.pub_mov = rospy.Publisher('topic_move', String, queue_size=1)
         self.pub_tts = rospy.Publisher('topic_tts', String, queue_size=1)
     
+        
     def ListenToTopicColor(self):
         """
         Wait for topic_color published

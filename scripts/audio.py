@@ -14,7 +14,7 @@ def CreateAudioProcessingNode():
     rospy.init_node('audio_node', anonymous=True)
     pub = rospy.Publisher('topic_color', String, queue_size=1)
 
-    TextToSpeech({'data': 'ask_color'})
+    TextToSpeech({'data': 'ask_color'})  #
 
     color = None
     while(color == None):
@@ -48,11 +48,11 @@ def TextToSpeech(obj):
     Take an object as the parameter; object.data = "{name_of_the_audio_file}" 
     """
     prefix = "../voice/" # Configure here to change directory to load audio from
-    audio.play(prefix + obj.data + '.mp3')
+    #audio.play(prefix + obj.data + '.mp3') #
 
 if __name__ == '__main__':
     try:
-        CreateAudioProcessingNode()
+        CreateAudioProcessingNode()  #
         rospy.Subscriber("topic_tts", String, TextToSpeech)
         rospy.spin()
     except rospy.ROSInterruptException:
