@@ -35,7 +35,7 @@ def move_base_client(x, y, yaw):
     return client.get_result()
 
 def MoveToTarget(data, pub):
-    rospy.logdebug(f"[Debug] The target is {data.data}.")
+    rospy.loginfo(f"[Debug] The target is {data.data}.")
 
     if(data.data == 'origin'):
         target_pos = GOAL_POS[0]
@@ -47,7 +47,7 @@ def MoveToTarget(data, pub):
     rospy.loginfo(f"[Info] Moving to {target_pos}.")
     # Wait for the navigation to finish
     result = move_base_client(target_pos[0], target_pos[1], target_pos[2])
-    rospy.logdebug(f"[Debug] result: {result}")
+    rospy.loginfo(f"[Debug] result: {result}")
     pub.publish(result)
 
 def CreateSendGoalNode():
