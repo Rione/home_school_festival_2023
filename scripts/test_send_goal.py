@@ -10,9 +10,9 @@ PUB="***"
 
 
 GOAL_POS=[0,0,0]#初期化
-Target1=[1,1,1]#右の人
-Target2=[2,2,2]#左の人
-Origin=[0,0,0]#もといた場所
+Target1=[-2.9,0.135,0.002]#右の人
+Target2=[0.617,-0.271,0.002]#左の人
+Origin=[0.220,0.715,0.002]#もといた場所
 
 rospy.init_node("test_send_goal_node",anonymous=True)
 pub=rospy.Publisher("topic_fin", String, queue_size=1)
