@@ -16,8 +16,8 @@ PUB="***" #なんでもいい
 
 def res_check():
     while(1):
-        res=audio.stt()#紙袋受け渡し/受け取り確認
-        if "OK" in res:
+    #    res=audio.stt()#紙袋受け渡し/受け取り確認
+    #    if "OK" in res:
             break
 
 if __name__ == '__main__':
@@ -45,7 +45,7 @@ if __name__ == '__main__':
             target="target1"
         else:
             target="target2"
-
+        
         pub_send_goal.publish(target)#移動１回目起動
         time.sleep(0.1)
 
