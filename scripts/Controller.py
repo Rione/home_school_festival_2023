@@ -3,9 +3,9 @@ import time
 from std_msgs.msg import String
 
 class Controller():
-    """
-    A class for managing robot's movement and the connections between the nodes. 
-    """
+    # """
+    # A class for managing robot's movement and the connections between the nodes. 
+    # """
     def __init__(self):
         # Create a node
         rospy.init_node('main_node', anonymous=True)
@@ -17,23 +17,23 @@ class Controller():
         # Publishers
         self.pub_mov = rospy.Publisher('topic_move', String, queue_size=1)
         self.pub_tts = rospy.Publisher('topic_tts', String, queue_size=1)
-    
+        #...self.pub_dir = rospy.Publisher('topic_direction', String, queue_size=1)
+        #...self.sub_dir = rospy.Publisher('topic_direction', String)
     def ListenToTopicColor(self):
-        """
-        Wait for topic_color published
-        """
+        # """
+        # Wait for topic_color published
+        # """
         self.color = rospy.wait_for_message('topic_color', String, timeout=None)
 
     def ListenToTopicDirection(self):
-        """
-        Wait for topic_direction published
-        """
+        # """
+        # Wait for topic_direction published
+        # """
         self.direction = rospy.wait_for_message('topic_direction', String, timeout=None)
-
     def PublishTopicMove(self, target):
-        """
-        Publish topic_move; move to the target
-        """
+        # """
+        # Publish topic_move; move to the target
+        # """
         if(target == 0): 
             data = 'origin'
             self.pub_tts.publish("info_move_origin")
@@ -63,9 +63,9 @@ class Controller():
         time.sleep(3)
 
     def GiveTheBag(self):
-        """
-        Handle the arrival at the 2nd target.
-        """
+        # """
+        # Handle the arrival at the 2nd target.
+        # """
         rospy.loginfo('[Info] Arrived at the 2nd target.')
         rospy.loginfo('[Info] Start navigation to the next target soon.')
         self.pub_tts.publish("ask_bag")

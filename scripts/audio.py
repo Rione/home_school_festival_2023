@@ -44,11 +44,11 @@ def CreateAudioProcessingNode():
     else: rospy.logerr("[Error] The color is not given. Please try again.")
 
 def TextToSpeech(obj):
-    """
-    Take an object as the parameter; object.data = "{name_of_the_audio_file}" 
-    """
+    # """
+    # Take an object as the parameter; object.data = "{name_of_the_audio_file}" 
+    # """
     prefix = "../voice/" # Configure here to change directory to load audio from
-    audio.play(prefix + obj.data + '.mp3')
+    #audio.play(prefix + obj.data + '.mp3')
 
 if __name__ == '__main__':
     try:
@@ -57,4 +57,7 @@ if __name__ == '__main__':
         rospy.spin()
     except rospy.ROSInterruptException:
         pass
+
+
+
 
