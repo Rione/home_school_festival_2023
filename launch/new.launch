@@ -1,0 +1,16 @@
+<launch>
+    <arg name="map_file" default="~/catkin_ws/src/home_school_festival_2023/map/bushitu.yaml"/>
+
+    <!-- Write code below  -->
+
+    <include file="$(find nav_lecture)/launch/minimal.launch" />
+    <include file="$(find nav_lecture)/launch/rplidar.launch" />
+    <include file="$(find nav_lecture)/launch/navigation.launch" >
+        <arg name="map_file" value="~/catkin_ws/src/home_school_festival_2023/map/bushitu.yaml"/>
+    </include>
+
+    <node pkg="home_school_festival_2023" name="audio_node" type="audio_new.py" output="screen"/>
+    <node pkg="home_school_festival_2023" name="finger_node" type="finger.py" output="screen"/>
+    <node pkg="home_school_festival_2023" name="send_goal_node" type="send_goal.py" output="screen"/>
+    <node pkg="home_school_festival_2023" name="main_node" type="main.py" output="screen"/>
+</launch>
