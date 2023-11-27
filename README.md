@@ -1,16 +1,25 @@
 # home_school_festival_2023
-(11.24時点)
+(11.27時点)
+
+### >>注意<<
+`audio_new.py`および`generate_audio_new.py`を実行するためには、**speech_and_NLP**パッケージのインポートが必要です。<br>
+詳しくは[speech_and_NLP](https://github.com/rionehome/speech_and_NLP/tree/main)レポジトリを参照してください。
 
 ### 1. voiceディレクトリを作成する
 `home_school_festival_2023`内に、`voice`ディレクトリがあることを確認してください。<br>
-直下にある必要はありません。なければ、`mkdir voice`で作成してください。
+`home_school_festival_2023`内であればどこでも動作します。なければ、`mkdir voice`で作成してください。
 
 ### 2. 音声ファイルを生成する
-読み上げ機能に使われる音声ファイル(mp3)を生成してください。<br>
+読み上げ機能に使われる音声ファイル(.mp3)を生成してください。<br>
 以下のコマンドを実行して、必要な音声ファイルを生成できます。
 ```bash
 cd ~/catkin_ws/src/home_school_festival_2023/scripts
 ./generate_audio.py
+```
+NLP版パッケージを利用する場合は(.wavファイルでの出力)、
+```bash
+cd ~/catkin_ws/src/home_school_festival_2023/scripts
+./generate_audio_new.py
 ```
 生成された音声ファイルは、`voice`ディレクトリに格納されます。
 
@@ -29,7 +38,11 @@ launchファイルの起動には、次のコマンドを実行してくださ�
 ```bash
 roslaunch home_school_festival_2023 test.launch
 ```
-launchファイルは次のlaunchファイルをincludeします:
+NLP版の音声認識を利用する場合は、
+```bash
+roslaunch home_school_festival_2023 new.launch
+```
+launchファイルは次のlaunchファイルをインクルードします:
 - minimal.launch
 - rplidar.launch
 - navigation.launch
