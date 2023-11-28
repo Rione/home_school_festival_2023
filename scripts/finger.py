@@ -8,7 +8,7 @@ import time
 
 r=0
 l=0
-count=50 #何回続いたらOKか（とりあえず１０）
+count=30 #何回続いたらOKか（とりあえず１０）
 rospy.init_node("finger_node",anonymous=True)
 pub = rospy.Publisher("topic_direction", String, queue_size=1)
 Direction ="None"
@@ -54,7 +54,7 @@ if __name__ == '__main__':
         print("fingerファイル読み込み")
         rospy.wait_for_message("topic_start_finger", String)
         print("方向開始")
-        audio.tts("方向を指さして教えてください。")
+        audio.tts("紙袋を持っている人の方向を指さして教えてください。")
         start=time.time()
         rospy.loginfo("方向入力を開始します。")
         #right_or_left()#デバッグ時コメントアウト
