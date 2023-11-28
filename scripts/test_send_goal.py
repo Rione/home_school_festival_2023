@@ -31,6 +31,12 @@ def set_goal(target):#受け取ったトピックに合わせて目標設定
     print(GOAL_POS)
     print(f"{target}を開始します")
     print(f"{GOAL_POS[0], GOAL_POS[1], GOAL_POS[2]}に移動します")
+    result = move_base_client(GOAL_POS[0], GOAL_POS[1], GOAL_POS[2])#デバッグ時コメントアウト
+    rospy.loginfo(result)#デバッグ時コメントアウト
+    print("fin送信")
+    for i in range(10):
+        pub.publish(PUB)
+        time.sleep(0.1)
     
     
     
@@ -57,21 +63,11 @@ def move_base_client(x, y, yaw):
 
 
 if __name__ == "__main__":
-    while(n<3):
-        n=0
-        target=rospy.wait_for_message("topic_move", String)
-        set_goal(target)
+    rospy.Subscriber("topic_move",String,set_goal)
+    rospy.spin()
 
-        result = move_base_client(GOAL_POS[0], GOAL_POS[1], GOAL_POS[2])#デバッグ時コメントアウト
-        rospy.loginfo(result)#デバッグ時コメントアウト
-        rospy.spin()
-
-        print("fin送信")
-        for i in range(10):
-            pub.publish(PUB)
-            time.sleep(0.1)
         
-        n+=1
+
         
         
 
