@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 
 # Run this program to generate voice data as mp3.
-import subprocess
 from online_audio_kit import AudioKit
 
-prefix = (subprocess.run("find ~/catkin_ws/src/home_school_festival_2023 -name voice", shell=True, capture_output=True, text=True)).stdout + '/'
+prefix = ""
 
 audio = AudioKit('ja')
 audio.tts("何色の紙袋をお持ちしましょうか?", mode="gen", path=prefix + "ask_color.mp3")
