@@ -5,6 +5,12 @@
 `audio_new.py`および`generate_audio_new.py`を実行するためには、**speech_and_NLP**パッケージのインポートが必要です。<br>
 詳しくは[speech_and_NLP](https://github.com/rionehome/speech_and_NLP/tree/main)レポジトリを参照してください。
 
+### 0. 必要なライブラリをインストールする
+このプロジェクトでは環境変数を.envファイルを管理しているため、以下のインストールが必要です。
+```bash
+pip intall python-dotenv
+```
+
 ### 1. voiceディレクトリを作成する
 `home_school_festival_2023`内に、`voice`ディレクトリがあることを確認してください。<br>
 `home_school_festival_2023`内であればどこでも動作します。なければ、`mkdir voice`で作成してください。
