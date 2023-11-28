@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-import subprocess
+
 from speech_and_NLP.src.tools.text_to_speech.textToWav import textToWav
 
-PRE = (subprocess.run("find ~/catkin_ws/src/home_school_festival_2023 -name voice", shell=True, capture_output=True, text=True)).stdout + '/'
+PRE = "" 
 
 if __name__ == '__main__':
     try:
