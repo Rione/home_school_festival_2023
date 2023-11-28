@@ -18,16 +18,19 @@ class Controller():
         time.sleep(3)
 
         # Publishers
-        self.pub_mov = rospy.Publisher('topic_move', String, queue_size=10)
-        self.pub_tts = rospy.Publisher('topic_tts', String, queue_size=10)
+        self.pub_mov = rospy.Publisher('topic_move', String, queue_size=1)
+        self.pub_tts = rospy.Publisher('topic_tts', String, queue_size=1)
     
     def ListenToBothTopics(self):
-        self.direction = rospy.wait_for_message('topic_direction', String, timeout=None)
         rospy.loginfo("[Debug] Waiting for topic_direction to be published.")
-        while(self.direction == None):
-            time.sleep(1)
-        rospy.loginfo("[Debug] topic_direction received.")
+        self.direction = rospy.wait_for_message('topic_direction', String, timeout=None)
+        # while(self.direction == None):
+        #     time.sleep(1)
+        rospy.loginfo(f"[Debug] topic_direction received: {self.direction}")
+
+        rospy.loginfo("[Debug] Waiting for topic_color to be published.")
         self.color = rospy.wait_for_message('topic_color', String, timeout=None)
+        rospy.loginfo(f"[Debug] topic_color received: {self.color}")        
 
     def PublishTopicMove(self, target):
         """
@@ -42,13 +45,13 @@ class Controller():
         elif(target == 2): 
             data = 'target2'
             self.pub_tts.publish("info_move_target")
-        else: rospy.logerr('[Error] Wrong parameter given.')
+        else: rospy.loginfo('[Error] Wrong parameter given.')
 
         time.sleep(3)
         self.pub_mov.publish(data)
 
         # Wait until the robot arrives at the target location
-        rospy.logdebug('[Debug] result: ' + rospy.wait_for_message('topic_end_nav', String, timeout=None))
+        rospy.loginfo('[Debug] result: ' + str(rospy.wait_for_message('topic_end_nav', String, timeout=None).data))
 
     def ReceiveTheBag(self):
         """
@@ -58,7 +61,10 @@ class Controller():
         rospy.loginfo('[Info] Start navigation to the next target soon.')
         self.pub_tts.publish("info_arrive_target")
         time.sleep(3)
-        self.pub_tts.publish(f"{'ask_white' if self.color == 'white' else 'ask_brown'}")
+        if (self.color == 'white'):
+            self.pub_tts.publish('ask_white')
+        elif(self.color == 'brown'):
+            self.pub_tts.publish('ask_brown')
         time.sleep(3)
 
     def GiveTheBag(self):
