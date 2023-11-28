@@ -22,15 +22,15 @@ class Controller():
         self.pub_tts = rospy.Publisher('topic_tts', String, queue_size=1)
     
     def ListenToBothTopics(self):
+        rospy.loginfo("[Debug] Waiting for topic_color to be published.")
+        self.color = rospy.wait_for_message('topic_color', String, timeout=None)
+        rospy.loginfo(f"[Debug] topic_color received: {self.color}")  
+
         rospy.loginfo("[Debug] Waiting for topic_direction to be published.")
         self.direction = rospy.wait_for_message('topic_direction', String, timeout=None)
         # while(self.direction == None):
         #     time.sleep(1)
-        rospy.loginfo(f"[Debug] topic_direction received: {self.direction}")
-
-        rospy.loginfo("[Debug] Waiting for topic_color to be published.")
-        self.color = rospy.wait_for_message('topic_color', String, timeout=None)
-        rospy.loginfo(f"[Debug] topic_color received: {self.color}")        
+        rospy.loginfo(f"[Debug] topic_direction received: {self.direction}")      
 
     def PublishTopicMove(self, target):
         """
