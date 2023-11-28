@@ -15,9 +15,9 @@ GOAL_POS = [0,0, 0]
 r=0
 l=0
 count=10 #何回続いたらOKか（とりあえず１０）
-Target1=(-2.9,0.135,0.002)#右の人
-Target2=(0.617,-0.271,0.002)#左の人
-Origin=(0.220,0.715,0.002)#もといた場所
+Target1=(-0.28,-0.83,0.002)#右の人
+Target2=(-1.5,-1.8,0.002)#左の人
+Origin=(-1.23,-0.38,0.002)#もといた場所
 
 
 def change_goal(a,b,c):
@@ -53,7 +53,6 @@ def send_goal():
     result = move_base_client(GOAL_POS[0], GOAL_POS[1], GOAL_POS[2])
     rospy.loginfo(result)
 
-    rospy.spin()
 
 def finger():
     start=time.time()
@@ -92,7 +91,7 @@ def finger():
     return(Direction)
 
 def Audio():
-    audio.tts("紙袋の色を教えてください")
+    audio.tts("紙袋の色を教えてください。白色がいいですか、茶色がいいですか")
 
     while(1):
                 text=audio.stt()
@@ -128,11 +127,14 @@ if __name__ == '__main__':
 
         send_goal()
 
-        audio.tts(f"{Color}の紙袋をください")
+        audio.tts(f"{Color}の紙袋をアームに掛けてください")
+
+        
         
         while(1):
+            audio.tts("受け渡しは終わりましたか")
             res=audio.stt()
-            if "OK" in res:
+            if "はい" in res:
                 break
         
         if  target=="right":
@@ -145,10 +147,11 @@ if __name__ == '__main__':
         audio.tts(f"{Color}の紙袋を持ってきました")
         
         while(1):
+            audio.tts("紙袋を受け取りましたか")
             res=audio.stt()
-            if "OK" in res:
+            if "はい" in res:
                 break
-        
+        audio.tts("元の場所に戻ります")
         change_goal(*Origin)
         send_goal()
         
