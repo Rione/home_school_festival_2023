@@ -2,6 +2,7 @@
 
 import rospy
 import actionlib
+import time
 import numpy as np
 from std_msgs.msg import String
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
@@ -46,7 +47,7 @@ def MoveToTarget(data, pub):
 
     rospy.loginfo(f"[Info] Moving to {target_pos}.")
     # Wait for the navigation to finish
-    result = move_base_client(target_pos[0], target_pos[1], target_pos[2])
+    result = str(move_base_client(target_pos[0], target_pos[1], target_pos[2]))
     rospy.loginfo(f"[Debug] result: {result}")
     pub.publish(result)
 
