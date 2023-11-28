@@ -57,8 +57,8 @@ if __name__ == '__main__':
         audio.tts("方向を指さして教えてください。")
         start=time.time()
         rospy.loginfo("方向入力を開始します。")
-        right_or_left()#デバッグ時コメントアウト
+        #right_or_left()#デバッグ時コメントアウト
         time.sleep(2)
-        #pub.publish("right") #テスト用
+        pub.publish("right") #テスト用
     except rospy.ROSInterruptException or KeyboardInterrupt:
         pass
