@@ -3,14 +3,17 @@
 import rospy
 import actionlib
 import numpy as np
+import os
+from dotenv import load_dotenv
 from std_msgs.msg import String
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 
 
+load_dotenv()
 GOAL_POS = [
-    [0, 0, 0],  # Origin
-    [0, 0, 0],  # Target1
-    [0, 0, 0],  # Target2
+    [os.getenv("ORIGIN_X"), os.getenv("ORIGIN_Y"), os.getenv("ORIGIN_Z") ],  # Origin
+    [os.getenv("TARGET1_X"), os.getenv("TARGET1_Y"), os.getenv("TARGET1_Z") ],  # Target1
+    [os.getenv("TARGET2_X"), os.getenv("TARGET2_Y"), os.getenv("TARGET2_Z") ],  # Target2
 ]
 
 def move_base_client(x, y, yaw):
