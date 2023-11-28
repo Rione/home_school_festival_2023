@@ -2,7 +2,6 @@
 
 import rospy
 import actionlib
-import time
 import numpy as np
 from std_msgs.msg import String
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
