@@ -28,6 +28,7 @@ def white_or_brown():
                     pub.publish(Color)#色をpublish
                     break
                 else:
+                    time.sleep(0.5)
                     audio.tts("もう一度お願いします")
                     continue
 
@@ -39,9 +40,9 @@ if __name__ == '__main__':
         print("音声開始")
         audio.tts("紙袋の色を教えてください。白と茶色のどちらがいいですか？")
         rospy.loginfo("音声入力を開始します")
-        #white_or_brown()#デバッグ時コメントアウト
+        white_or_brown()#デバッグ時コメントアウト
         time.sleep(2)
-        pub.publish("white") #テスト用
+        #pub.publish("white") #テスト用
 
     except rospy.ROSInterruptException or KeyboardInterrupt:
         pass

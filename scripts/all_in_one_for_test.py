@@ -156,7 +156,7 @@ if __name__ == '__main__':
         audio.tts("元の場所に戻ります")
         change_goal(*Origin)
         send_goal()
-        
+        audio.tts("すべてのプログラムが終了しました")
     except rospy.ROSInterruptException or KeyboardInterrupt:
         pass
 

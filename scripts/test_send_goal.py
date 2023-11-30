@@ -33,6 +33,7 @@ def set_goal(target):#受け取ったトピックに合わせて目標設定
     print(f"{GOAL_POS[0], GOAL_POS[1], GOAL_POS[2]}に移動します")
     result = move_base_client(GOAL_POS[0], GOAL_POS[1], GOAL_POS[2])#デバッグ時コメントアウト
     rospy.loginfo(result)#デバッグ時コメントアウト
+    time.sleep(0.5)
     print("fin送信")
     for i in range(10):
         pub.publish(PUB)

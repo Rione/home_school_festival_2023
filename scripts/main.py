@@ -15,6 +15,8 @@ PUB="***" #なんでもいい
 
 
 def res_check():
+    time.sleep(0.5)
+    audio.tts("受け渡しは終わりましたか")
     while(1):
     #    res=audio.stt()#紙袋受け渡し/受け取り確認
     #    if "OK" in res:
@@ -33,6 +35,7 @@ if __name__ == '__main__':
             time.sleep(0.1)
         target=rospy.wait_for_message("topic_direction", String)#finger終了まで待機
         print("色と方向がわかりました")
+        audio.tts("移動を開始します。")
         print(Color,target)
         
         if Color.data=="white":
@@ -52,9 +55,11 @@ if __name__ == '__main__':
         rospy.wait_for_message("topic_fin", String)#移動１回目終了まで待機
         print("finトピック受信")
 
-        audio.tts(f"{Color}の紙袋をください")
+        audio.tts(f"{Color}の紙袋をアームにかけてください。")
+
 
         res_check()#紙袋受け渡し確認
+        audio.tts("わかりました。ありがとうございます。")
         
         if  target=="target1":#２回目移動目標設定
             target="target2"
@@ -65,15 +70,20 @@ if __name__ == '__main__':
             pub_send_goal.publish(target)#移動２回目起動
             time.sleep(0.1)
         rospy.wait_for_message("topic_fin", String)#移動２回目終了まで待機
+        print("finトピック受信")
 
         audio.tts(f"{Color}の紙袋を持ってきました")
         
         res_check()#紙袋受け取り確認
+        audio.tts("元の場所に戻ります")
 
         for i in range(1):
             pub_send_goal.publish("origin")#移動３回目起動
             time.sleep(0.1)
-        
+        rospy.wait_for_message("topic_fin", String)#終了確認
+        print("finトピック受信")
+
+        audio.tts("すべてのプログラムが終了しました")
         
     except rospy.ROSInterruptException or KeyboardInterrupt:
         pass
