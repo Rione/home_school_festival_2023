@@ -118,6 +118,7 @@ if __name__ == '__main__':
         #target="left"#デバッグ用
 
         print("色と方向がわかりました")
+        audio.tts("移動を開始します。")
 
         if  target=="right":
             change_goal(*Target1)
@@ -136,6 +137,7 @@ if __name__ == '__main__':
             res=audio.stt()
             if "はい" in res:
                 break
+        audio.tts("わかりました。ありがとうございます。")
         
         if  target=="right":
             change_goal(*Target2)
