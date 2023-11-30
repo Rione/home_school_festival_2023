@@ -14,7 +14,7 @@ rospy.init_node("send_goal_node")
 GOAL_POS = [0,0, 0]
 r=0
 l=0
-count=10 #何回続いたらOKか（とりあえず１０）
+count=50 #何回続いたらOKか（とりあえず１０）
 Target1=(-0.28,-0.83,0.002)#右の人
 Target2=(-1.5,-1.8,0.002)#左の人
 Origin=(-1.23,-0.38,0.002)#もといた場所
