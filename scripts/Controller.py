@@ -18,9 +18,9 @@ class Controller():
         time.sleep(3)
 
         # Publishers
-        self.pub_mov = rospy.Publisher('topic_move', String, queue_size=1)
-        self.pub_audio = rospy.Publisher('topic_audio', String, queue_size=1)
-        self.pub_camera = rospy.Publisher('topic_camera', String, queue_size=1)
+        self.pub_mov = rospy.Publisher('topic_move', String, queue_size=10)
+        self.pub_audio = rospy.Publisher('topic_audio', String, queue_size=10)
+        self.pub_camera = rospy.Publisher('topic_camera', String, queue_size=10)
     
     def ListenToBothTopics(self):
         self.pub_audio.publish("start_mic")
