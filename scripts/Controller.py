@@ -19,13 +19,16 @@ class Controller():
 
         # Publishers
         self.pub_mov = rospy.Publisher('topic_move', String, queue_size=1)
-        self.pub_tts = rospy.Publisher('topic_tts', String, queue_size=1)
+        self.pub_audio = rospy.Publisher('topic_audio', String, queue_size=1)
+        self.pub_camera = rospy.Publisher('topic_camera', String, queue_size=1)
     
     def ListenToBothTopics(self):
+        self.pub_audio.publish("start_mic")
         rospy.loginfo("[Debug] Waiting for topic_color to be published.")
         self.color = rospy.wait_for_message('topic_color', String, timeout=None)
         rospy.loginfo(f"[Debug] topic_color received: {self.color}")  
 
+        self.pub_camera.publish("start_cam")
         rospy.loginfo("[Debug] Waiting for topic_direction to be published.")
         self.direction = rospy.wait_for_message('topic_direction', String, timeout=None)
         # while(self.direction == None):
@@ -38,13 +41,13 @@ class Controller():
         """
         if(target == 0): 
             data = 'origin'
-            self.pub_tts.publish("info_move_origin")
+            self.pub_audio.publish("info_move_origin")
         elif(target == 1): 
             data = 'target1'
-            self.pub_tts.publish("info_move_target")
+            self.pub_audio.publish("info_move_target")
         elif(target == 2): 
             data = 'target2'
-            self.pub_tts.publish("info_move_target")
+            self.pub_audio.publish("info_move_target")
         else: rospy.loginfo('[Error] Wrong parameter given.')
 
         time.sleep(3)
@@ -59,12 +62,12 @@ class Controller():
         """
         rospy.loginfo('[Info] Arrived at the 1st target.')
         rospy.loginfo('[Info] Start navigation to the next target soon.')
-        self.pub_tts.publish("info_arrive_target")
+        self.pub_audio.publish("info_arrive_target")
         time.sleep(3)
         if (self.color == 'white'):
-            self.pub_tts.publish('ask_white')
+            self.pub_audio.publish('ask_white')
         elif(self.color == 'brown'):
-            self.pub_tts.publish('ask_brown')
+            self.pub_audio.publish('ask_brown')
         time.sleep(3)
 
     def GiveTheBag(self):
@@ -73,7 +76,7 @@ class Controller():
         """
         rospy.loginfo('[Info] Arrived at the 2nd target.')
         rospy.loginfo('[Info] Start navigation to the next target soon.')
-        self.pub_tts.publish("ask_bag")
+        self.pub_audio.publish("ask_bag")
         time.sleep(3)
 
 
