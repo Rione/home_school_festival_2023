@@ -34,8 +34,7 @@ def DetectFingerDirection(limit:int) -> str:
     return result
 
 def CreateFingerDirectionNode() -> None:
-    # Node and publisher
-    rospy.init_node('finger_node', anonymous=True)
+    # Publishers
     pub_dir = rospy.Publisher('topic_direction', String, queue_size=1)
     pub_audio = rospy.Publisher('topic_audio', String, queue_size=1)
 
@@ -58,6 +57,7 @@ def CreateFingerDirectionNode() -> None:
     return
 
 def main() -> None:
+    rospy.init_node('finger_node', anonymous=True)
     rospy.Subscriber("topic_camera", String, CreateFingerDirectionNode)
     rospy.spin()
 
