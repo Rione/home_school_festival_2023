@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+ENV_PATH = ""
+
 import rospy
 import actionlib
 import numpy as np
@@ -9,7 +11,7 @@ from std_msgs.msg import String
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 
 
-load_dotenv()
+load_dotenv(dotenv_path=ENV_PATH)
 GOAL_POS = [
     [os.getenv("ORIGIN_X"), os.getenv("ORIGIN_Y"), os.getenv("ORIGIN_Z") ],  # Origin
     [os.getenv("TARGET1_X"), os.getenv("TARGET1_Y"), os.getenv("TARGET1_Z") ],  # Target1
