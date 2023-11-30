@@ -91,7 +91,7 @@ def finger():
     return(Direction)
 
 def Audio():
-    audio.tts("紙袋の色を教えてください。白色がいいですか、茶色がいいですか")
+    audio.tts("紙袋の色を教えてください。しろ色がいいですか、茶色がいいですか")
 
     while(1):
                 text=audio.stt()
