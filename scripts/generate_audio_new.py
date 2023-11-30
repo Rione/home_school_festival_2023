@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
+ENV_PATH = ""
+
 import os
 from dotenv import load_dotenv
 from speech_and_NLP.src.tools.text_to_speech.textToWav import textToWav
 
 
-load_dotenv()
+load_dotenv(dotenv_path=ENV_PATH)
 PREFIX = os.getenv('VOICE_PATH')
 
 if __name__ == '__main__':
