@@ -63,8 +63,17 @@ def move_base_client(x, y, yaw):
 
 
 if __name__ == "__main__":
-    rospy.Subscriber("topic_move",String,set_goal)
-    rospy.spin()
+    tmp=None
+    target=None
+    while(True):
+        target=rospy.wait_for_message("topic_move", String)
+        if tmp!=target:
+            set_goal(target)
+            tmp=target
+        time.sleep(0.1)
+        
+        
+    
 
         
 
