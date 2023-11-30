@@ -41,8 +41,8 @@ def AskWhichColor() -> None:
 
     TextToSpeech("ask_color")
 
-    boolean:str = 'no'
-    while(boolean == 'no'):
+    boolean:str = None
+    while(boolean != 'yes'):
         color = SpeechRecognition()
         if(color == 'white'):
             TextToSpeech("info_white")
@@ -61,29 +61,27 @@ def AskWhichColor() -> None:
 
     return
 
-def AskYesOrNo() -> str:
+def AskYesOrNo() -> bool:
     pub = rospy.Publisher('topic_end_yes', String, queue_size=10)
 
     TextToSpeech("ask_yes_or_no")
 
-    boolean:bool = None
-    while(boolean == None):
-        try:
-            for text in AUDIO.vosk():
-                if("はい" in text):
-                    boolean = 'yes'
-                    break
-                elif("いいえ" in text):
-                    boolean = 'no'
-                    break
-                else: continue
-            # if the for-loop ends up without break
-            else: 
-                TextToSpeech("err_audio")
-                time.sleep(3)
-                continue
-        except Exception as e:
-            rospy.loginfo(f'[Error] Exception occurred: {e}')
+    boolean:str = None
+    try:
+        for text in AUDIO.vosk():
+            if("はい" in text):
+                boolean = 'yes'
+                break
+            elif("いいえ" in text):
+                boolean = 'no'
+                break
+            else: continue
+        # if the for-loop ends up without break
+        else: 
+            TextToSpeech("err_audio")
+            time.sleep(3)
+    except Exception as e:
+        rospy.loginfo(f'[Error] Exception occurred: {e}')
     
     try:
         pub.publish(boolean) # Publish a topic without waiting for the subscriber being established
