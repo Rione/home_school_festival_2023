@@ -7,23 +7,24 @@ def main():
     # Create an instance / node
     ctrl: Controller = Controller()
 
-    # Wait for color and direction being given
+    # Wait for color and direction to be given
     print('[Info] Listening to topic_color and topic_direction.')
-    ctrl.ListenToBothTopics()
+    ctrl.ListenToTopicColor()
+    ctrl.ListenToTopicDirection()
     print('[Info] Moving to the target.')
     
-    # Move to the first target
-    ctrl.PublishTopicMove(1 if(ctrl.direction == 'left') else 2) # Left to 1, right to 2
+    # Move to the 1st target
+    ctrl.PublishTopicMove('target1' if(ctrl.direction == 'left') else 'target2') 
     print('[Info] topic_move published.')
     ctrl.ReceiveTheBag()
 
-    # Move to the second target
-    ctrl.PublishTopicMove(2 if(ctrl.direction == 'left') else 1) # Move to the other side
+    # Move to the 2nd target
+    ctrl.PublishTopicMove('target1' if(ctrl.direction == 'right') else 'target2')
     print('[Info] topic_move published.')
     ctrl.GiveTheBag()
 
     # Go back to the origin
-    ctrl.PublishTopicMove(0)
+    ctrl.PublishTopicMove('origin')
     print('[Info] topic_move published.')
 
     print('[Info] main_node has been terminated.')
