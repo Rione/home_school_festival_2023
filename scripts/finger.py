@@ -54,7 +54,7 @@ if __name__ == '__main__':
         print("fingerファイル読み込み")
         rospy.wait_for_message("topic_start_finger", String)
         print("方向開始")
-        audio.tts("紙袋を持っている人の方向を指さして教えてください。")        
+        audio.tts("紙袋を取りに行く方向を選び、どちらかの人を指さして教えてください。")        
         rospy.loginfo("方向入力を開始します。")
         start=time.time()
         right_or_left()#デバッグ時コメントアウト

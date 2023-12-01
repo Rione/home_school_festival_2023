@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import keyboard
+
 import rospy
 import time
 from std_msgs.msg import String
@@ -18,10 +18,21 @@ PUB="***" #なんでもいい
 def res_check():
     time.sleep(0.5)
     audio.tts("受け渡しは終わりましたか")
+
+    time_count=time.time()
     while(1):
-        res=audio.stt()#紙袋受け渡し/受け取り確認
-        if "はい" in res or keyboard.is_pressed("a"):
-            break
+            res=audio.stt()#紙袋受け渡し/受け取り確認
+            if "はい" in res or "OK"in res or "オーケー"in res:
+                break
+            elif time.time()-time_count>=5:
+                break
+
+
+    
+    #print("完了時enter*2")#キーボード入力パス
+    #input()#キーボード入力パス
+
+
 
 if __name__ == '__main__':
     try:
@@ -35,8 +46,7 @@ if __name__ == '__main__':
             pub_finger.publish(PUB)#finger起動
             time.sleep(0.1)
         target=rospy.wait_for_message("topic_direction", String)#finger終了まで待機
-        print("色と方向がわかりました")
-        audio.tts("移動を開始します。")
+        audio.tts("色と方向がわかりました。紙袋を取りに行きます。")
         print(Color,target)
         
         if Color.data=="white":
@@ -61,6 +71,7 @@ if __name__ == '__main__':
 
         res_check()#紙袋受け渡し確認
         audio.tts("わかりました。ありがとうございます。")
+        audio.tts("紙袋を渡しに行きます")
         
         if  target=="target1":#２回目移動目標設定
             target="target2"

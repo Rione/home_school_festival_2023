@@ -6,6 +6,7 @@ audio = AudioKit(language="ja")
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from hand_detect import finger_direction
+import keyboard
 
 import time
 import numpy as np
@@ -56,7 +57,7 @@ def send_goal():
 
 def finger():
     start=time.time()
-    audio.tts("方向を指さして教えてください。")
+    audio.tts("紙袋を取りに行く方向を選び、どちらかの人を指さして教えてください。")
     global r
     global l
     for direction in finger_direction():
@@ -91,7 +92,7 @@ def finger():
     return(Direction)
 
 def Audio():
-    audio.tts("紙袋の色を教えてください。しろ色がいいですか、茶色がいいですか")
+    audio.tts("紙袋の色をしろ色と茶色のどちらかから選んでください。")
 
     while(1):
                 text=audio.stt()
@@ -118,7 +119,7 @@ if __name__ == '__main__':
         #target="left"#デバッグ用
 
         print("色と方向がわかりました")
-        audio.tts("移動を開始します。")
+        audio.tts("色と方向がわかりました。紙袋を取りに行きます。")
 
         if  target=="right":
             change_goal(*Target1)
@@ -126,7 +127,7 @@ if __name__ == '__main__':
             change_goal(*Target2)
         
 
-        send_goal()
+        send_goal()#デバッグ時コメントアウト
 
         audio.tts(f"{Color}の紙袋をアームに掛けてください")
 
@@ -134,28 +135,38 @@ if __name__ == '__main__':
         
         while(1):
             audio.tts("受け渡しは終わりましたか")
+            time_count=time.time()
             res=audio.stt()
             if "はい" in res:
                 break
-        audio.tts("わかりました。ありがとうございます。")
-        
+            elif time.time()-time_count>=5:
+                break
+        #print("完了時enter*2")#キーボード入力パス
+        #input()#キーボード入力パス
+
+        audio.tts("紙袋を渡しに行きます")
         if  target=="right":
             change_goal(*Target2)
         else:
             change_goal(*Target1)
 
-        send_goal()
+        send_goal()#デバッグ時コメントアウト
 
         audio.tts(f"{Color}の紙袋を持ってきました")
         
         while(1):
             audio.tts("紙袋を受け取りましたか")
+            time_count=time.time()
             res=audio.stt()
-            if "はい" in res:
+            if "はい" in res or keyboard.is_pressed("a"):
                 break
+            elif time.time()-time_count>=5:
+                break
+        #print("完了時enter*2")#キーボード入力パス
+        #input()#キーボード入力パス
         audio.tts("元の場所に戻ります")
         change_goal(*Origin)
-        send_goal()
+        send_goal()#デバッグ時コメントアウト
         audio.tts("すべてのプログラムが終了しました")
     except rospy.ROSInterruptException or KeyboardInterrupt:
         pass

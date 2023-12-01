@@ -38,7 +38,7 @@ if __name__ == '__main__':
         print("audioファイル読み込み")
         rospy.wait_for_message("topic_start_audio", String)
         print("音声開始")
-        audio.tts("紙袋の色を教えてください。白と茶色のどちらがいいですか？")
+        audio.tts("紙袋の色をしろ色と茶色のどちらかから選んでください。")
         rospy.loginfo("音声入力を開始します")
         white_or_brown()#デバッグ時コメントアウト
         time.sleep(2)
