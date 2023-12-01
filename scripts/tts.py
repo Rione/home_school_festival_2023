@@ -9,8 +9,6 @@ from std_msgs.msg import String
 from playsound import playsound
 
 
-rospy.init_node('tts_node', anonymous=True)
-
 load_dotenv(dotenv_path=ENV_PATH)
 
 def TextToSpeech(data) -> None:
@@ -23,12 +21,11 @@ def TextToSpeech(data) -> None:
 
     return
 
-def main():
-    rospy.Subscriber("topic_tts", String, TextToSpeech)
-    rospy.spin()
-
 if __name__ == "__main__":
     try:
-        main()
+        rospy.init_node('tts_node', anonymous=True)
+        rospy.Subscriber("topic_tts", String, TextToSpeech)
+        print("tts_node: ready")
+        rospy.spin()
     except rospy.ROSInterruptException:
         pass
