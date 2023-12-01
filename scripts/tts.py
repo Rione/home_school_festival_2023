@@ -8,7 +8,7 @@ from playsound import playsound
 
 def TextToSpeech(data) -> None:
     rospy.loginfo("[Debug] tts called.")
-    prefix = env.VOICE_PATH
+    prefix = env.VOICE_PATH + "/"
     try:
         playsound(prefix + data.data + '.mp3')
     except Exception as e:
