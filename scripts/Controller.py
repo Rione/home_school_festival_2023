@@ -1,6 +1,8 @@
 import rospy
 import time
 from std_msgs.msg import String
+from std_srvs.srv import SetBool
+
 
 class Controller():
     """
@@ -15,25 +17,36 @@ class Controller():
         self.direction: str = None   # 進行方向
 
         rospy.loginfo("[Info] Setting up...")
-        time.sleep(3)
 
         # Publishers
-        self.pub_mov = rospy.Publisher('topic_move', String, queue_size=10)
-        self.pub_audio = rospy.Publisher('topic_audio', String, queue_size=10)
-        self.pub_camera = rospy.Publisher('topic_camera', String, queue_size=10)
+        self.pub_mov = rospy.Publisher('topic_move', String, queue_size=1)
+        self.pub_tts = rospy.Publisher('topic_tts', String, queue_size=1)
+        # self.pub_init_audio = rospy.Publisher('topic_init_audio', String, queue_size=1)
+        # self.pub_init_camera = rospy.Publisher('topic_init_camera', String, queue_size=1)
     
-    def ListenToBothTopics(self):
-        self.pub_audio.publish("start_mic")
-        rospy.loginfo("[Debug] Waiting for topic_color to be published.")
-        self.color = rospy.wait_for_message('topic_color', String, timeout=None)
-        rospy.loginfo(f"[Debug] topic_color received: {self.color}")  
-
-        self.pub_camera.publish("start_cam")
+    def ListenToTopicDirection(self):
+        rospy.wait_for_service('srv_init_camera')
+        try:
+            service_call = rospy.ServiceProxy('srv_init_camera', SetBool)
+            resp = service_call(True)
+        except rospy.ServiceException as e:
+            rospy.loginfo("[Error] Service call failed: %s" % e)
         rospy.loginfo("[Debug] Waiting for topic_direction to be published.")
-        self.direction = rospy.wait_for_message('topic_direction', String, timeout=None)
-        # while(self.direction == None):
-        #     time.sleep(1)
-        rospy.loginfo(f"[Debug] topic_direction received: {self.direction}")      
+        # self.direction = rospy.wait_for_message('topic_direction', String, timeout=None)
+        self.direction = resp.message
+        rospy.loginfo(f"[Debug] topic_direction received: {self.direction}") 
+
+    def ListenToTopicColor(self):
+        rospy.wait_for_service('srv_init_audio')
+        try:
+            service_call = rospy.ServiceProxy('srv_init_audio', SetBool)
+            resp = service_call(True)
+        except rospy.ServiceException as e:
+            rospy.loginfo("[Error] Service call failed: %s" % e)
+        rospy.loginfo("[Debug] Waiting for topic_color to be published.")
+        # self.color = rospy.wait_for_message('topic_color', String, timeout=None)
+        self.color = resp.message
+        rospy.loginfo(f"[Debug] topic_color received: {self.color}")  
 
     def PublishTopicMove(self, target):
         """
@@ -41,20 +54,18 @@ class Controller():
         """
         if(target == 0): 
             data = 'origin'
-            self.pub_audio.publish("info_move_origin")
+            self.pub_tts.publish("info_move_origin")
         elif(target == 1): 
             data = 'target1'
-            self.pub_audio.publish("info_move_target")
+            self.pub_tts.publish("info_move_target")
         elif(target == 2): 
             data = 'target2'
-            self.pub_audio.publish("info_move_target")
-        else: rospy.loginfo('[Error] Wrong parameter given.')
-
+            self.pub_tts.publish("info_move_target")
         time.sleep(3)
-        self.pub_mov.publish(data)
 
+        self.pub_mov.publish(data)
         # Wait until the robot arrives at the target location
-        rospy.loginfo('[Debug] result: ' + str(rospy.wait_for_message('topic_end_nav', String, timeout=None).data))
+        rospy.loginfo('[Debug] result: ' + str(rospy.wait_for_message('topic_nav_finished', String, timeout=None).data))
 
     def ReceiveTheBag(self):
         """
@@ -62,12 +73,13 @@ class Controller():
         """
         rospy.loginfo('[Info] Arrived at the 1st target.')
         rospy.loginfo('[Info] Start navigation to the next target soon.')
-        self.pub_audio.publish("info_arrive_target")
+        self.pub_tts.publish("info_arrive_target")
         time.sleep(3)
+
         if (self.color == 'white'):
-            self.pub_audio.publish('ask_white')
+            self.pub_tts.publish('ask_white')
         elif(self.color == 'brown'):
-            self.pub_audio.publish('ask_brown')
+            self.pub_tts.publish('ask_brown')
         time.sleep(3)
 
     def GiveTheBag(self):
@@ -76,7 +88,7 @@ class Controller():
         """
         rospy.loginfo('[Info] Arrived at the 2nd target.')
         rospy.loginfo('[Info] Start navigation to the next target soon.')
-        self.pub_audio.publish("ask_bag")
+        self.pub_tts.publish("ask_bag")
         time.sleep(3)
 
 
