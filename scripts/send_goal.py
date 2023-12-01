@@ -48,9 +48,9 @@ def MoveToTarget(data):
 
     rospy.loginfo(f"[Info] Moving to {target_pos}.")
     # Wait for the navigation to finish
-    result = str(move_base_client(target_pos[0], target_pos[1], target_pos[2]))
-    rospy.loginfo(f"[Debug] result: {result}")
-    pub_nav_fin.publish(result)
+    move_base_client(target_pos[0], target_pos[1], target_pos[2])
+    rospy.loginfo(f"[Debug] Navigation finished.")
+    pub_nav_fin.publish("finished")
 
     return
 
