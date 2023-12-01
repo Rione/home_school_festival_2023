@@ -58,7 +58,7 @@ if __name__ == '__main__':
         rospy.loginfo("方向入力を開始します。")
         start=time.time()
         right_or_left()#デバッグ時コメントアウト
-        #time.sleep(2)
+        #time.sleep(2)#テスト用
         #pub.publish("right") #テスト用
     except rospy.ROSInterruptException or KeyboardInterrupt:
         pass

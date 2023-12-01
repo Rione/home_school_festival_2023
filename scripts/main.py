@@ -18,8 +18,8 @@ def res_check():
     time.sleep(0.5)
     audio.tts("受け渡しは終わりましたか")
     while(1):
-    #    res=audio.stt()#紙袋受け渡し/受け取り確認
-    #    if "OK" in res:
+        res=audio.stt()#紙袋受け渡し/受け取り確認
+        if "はい" in res:
             break
 
 if __name__ == '__main__':
