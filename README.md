@@ -9,7 +9,7 @@
 このプロジェクトでは以下のインストールが必要です。<br>
 python-dotenvは.envファイルを読み込むため、playsoundは音声ナビゲーションに利用します。
 ```bash
-pip install python-dotenv playsound==1.3.0
+pip install playsound==1.3.0
 ```
 
 ### 1. .envファイルのパスを指定する
