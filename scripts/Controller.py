@@ -21,9 +21,7 @@ class Controller():
         # Publishers
         self.pub_mov = rospy.Publisher('topic_move', String, queue_size=1)
         self.pub_tts = rospy.Publisher('topic_tts', String, queue_size=1)
-        # self.pub_init_audio = rospy.Publisher('topic_init_audio', String, queue_size=1)
-        # self.pub_init_camera = rospy.Publisher('topic_init_camera', String, queue_size=1)
-    
+
     def ListenToTopicDirection(self):
         rospy.wait_for_service('srv_init_camera')
         try:
@@ -48,47 +46,84 @@ class Controller():
         self.color = resp.message
         rospy.loginfo(f"[Debug] topic_color received: {self.color}")  
 
+        return
+
     def PublishTopicMove(self, target):
         """
         Publish topic_move; move to the target
         """
-        if(target == 0): 
-            data = 'origin'
+        if(target == 'origin'): 
             self.pub_tts.publish("info_move_origin")
-        elif(target == 1): 
-            data = 'target1'
+        elif(target == 'target1'): 
             self.pub_tts.publish("info_move_target")
-        elif(target == 2): 
-            data = 'target2'
+        elif(target == 'target2'): 
             self.pub_tts.publish("info_move_target")
-        time.sleep(3)
+        else:
+            rospy.loginfo("[Error] Invalid target given.")
+        time.sleep(2)
 
-        self.pub_mov.publish(data)
+        self.pub_mov.publish(target)
         # Wait until the robot arrives at the target location
         rospy.loginfo('[Debug] result: ' + str(rospy.wait_for_message('topic_nav_finished', String, timeout=None).data))
+
+        return
 
     def ReceiveTheBag(self):
         """
         Handle the arrival at the 1st target.
         """
         rospy.loginfo('[Info] Arrived at the 1st target.')
-        rospy.loginfo('[Info] Start navigation to the next target soon.')
+        
         self.pub_tts.publish("info_arrive_target")
-        time.sleep(3)
+        time.sleep(2)
+
+        rospy.loginfo('[Info] Waiting for the server.')
+        rospy.wait_for_service('srv_yes_or_no')
 
         if (self.color == 'white'):
             self.pub_tts.publish('ask_white')
         elif(self.color == 'brown'):
             self.pub_tts.publish('ask_brown')
+        time.sleep(2)
+
+        self.pub_tts('check_place')
         time.sleep(3)
+
+        try:
+            while(True):
+                service_call = rospy.ServiceProxy('srv_yes_or_no', SetBool)
+                resp = service_call(True)
+                if(resp.success == True): break
+        except rospy.ServiceException as e:
+            rospy.loginfo("[Error] Service call failed: %s" % e)
+
+        return
 
     def GiveTheBag(self):
         """
         Handle the arrival at the 2nd target.
         """
         rospy.loginfo('[Info] Arrived at the 2nd target.')
-        rospy.loginfo('[Info] Start navigation to the next target soon.')
+        self.pub_tts.publish("info_arrive_target")
+        time.sleep(2)
+
+        rospy.loginfo('[Info] Waiting for the server.')
+        rospy.wait_for_service('srv_yes_or_no')
+
         self.pub_tts.publish("ask_bag")
-        time.sleep(3)
+        time.sleep(2)
+
+        self.pub_tts.publish("check_receive")
+        time.sleep(2)
+
+        try:
+            while(True):
+                service_call = rospy.ServiceProxy('srv_yes_or_no', SetBool)
+                resp = service_call(True)
+                if(resp.success == True): break
+        except rospy.ServiceException as e:
+            rospy.loginfo("[Error] Service call failed: %s" % e)
+
+        return
 
 
