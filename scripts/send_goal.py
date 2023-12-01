@@ -39,30 +39,31 @@ def move_base_client(x, y, yaw):
 
     return client.get_result()
 
-def MoveToTarget(data, pub):
-    rospy.loginfo(f"[Debug] The target is {data.data}.")
+def MoveToTarget(data):
+    target = data.data
+    rospy.loginfo(f"[Debug] The target is {target}.")
 
-    if(data.data == 'origin'):
+    if(target == 'origin'):
         target_pos = GOAL_POS[0]
-    elif(data.data == 'target1'):
+    elif(target == 'target1'):
         target_pos = GOAL_POS[1]
-    elif(data.data == 'target2'):
+    elif(target == 'target2'):
         target_pos = GOAL_POS[2]
 
     rospy.loginfo(f"[Info] Moving to {target_pos}.")
     # Wait for the navigation to finish
     result = str(move_base_client(target_pos[0], target_pos[1], target_pos[2]))
     rospy.loginfo(f"[Debug] result: {result}")
-    pub.publish(result)
+    pub_nav_fin.publish(result)
 
-def CreateSendGoalNode():
-    rospy.init_node("send_goal_node", anonymous=True)
-    pub = rospy.Publisher('topic_end_nav', String, queue_size=1)
-    rospy.Subscriber("topic_move", String, MoveToTarget, pub)
-    rospy.spin()
+    return
 
 if __name__ == "__main__":
     try:
-        CreateSendGoalNode()
+        rospy.init_node("send_goal_node", anonymous=True)
+        pub_nav_fin = rospy.Publisher('topic_nav_finished', String, queue_size=1)
+        rospy.Subscriber("topic_move", String, MoveToTarget)
+        print("send_goal_node: ready")
+        rospy.spin()
     except rospy.ROSInterruptException:
         pass
