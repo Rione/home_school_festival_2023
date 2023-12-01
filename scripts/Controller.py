@@ -64,7 +64,8 @@ class Controller():
 
         self.pub_mov.publish(target)
         # Wait until the robot arrives at the target location
-        rospy.loginfo('[Debug] result: ' + str(rospy.wait_for_message('topic_nav_finished', String, timeout=None).data))
+        rospy.wait_for_message('topic_nav_finished', String, timeout=None)
+        rospy.loginfo("[Info] Navigation successfully finished.")
 
         return
 
