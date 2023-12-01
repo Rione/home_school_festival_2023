@@ -6,27 +6,18 @@
 詳しくは[speech_and_NLP](https://github.com/rionehome/speech_and_NLP/tree/main)レポジトリを参照してください。
 
 ### 0. 必要なライブラリをインストールする
-このプロジェクトでは以下のインストールが必要です。<br>
-python-dotenvは.envファイルを読み込むため、playsoundは音声ナビゲーションに利用します。
+レポジトリ直下に移動し、以下のコマンドを実行します。
 ```bash
-pip install playsound==1.3.0
+pip install -r requirements.txt
 ```
 
-### 1. .envファイルのパスを指定する
-以下の４ファイルで、.envファイルの**絶対パス**を指定する必要があります。
-- `tts.py`
-- `stt.py`
-- `send_goal.py`
-- `generate_audio.py`
-
-以下の例のように書き換えてください。
-```python
-ENV_PATH = "/hoge/fuga/..../home_school_festival_2023/.env"
-```
-
-### 2. voiceディレクトリを作成する
+### 1. voiceディレクトリを作成する
 `home_school_festival_2023`内に、`voice`ディレクトリがあることを確認してください。<br>
 `home_school_festival_2023`内であればどこでも動作します。なければ、`mkdir voice`で作成してください。
+
+### 2. env.pyを書き換える
+`VOICE_PATH`には、`voice`ディレクトリの**絶対パス**を指定する必要があります。(最後のスラッシュ不要)<br>
+また、目標地点への座標を指定します。`[X, Y, Z]`となるように数値を入力してください。
 
 ### 3. 音声ファイルを生成する
 読み上げ機能に使われる音声ファイル(.mp3)を生成してください。<br>
@@ -68,7 +59,8 @@ launchファイルは次のlaunchファイルをインクルードします:
 
 launchファイルは次のノードを起動します:
 - main_node
-- audio_node
+- stt_node
+- tts_node
 - finger_node
 - send_goal_node
 
