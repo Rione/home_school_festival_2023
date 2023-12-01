@@ -15,13 +15,13 @@ def white_or_brown():
 
     while(1):
                 text=audio.stt()
-                if "白" in text:
+                if "白" in text or "しろ" in text or "いろいろ" in text or "色々" in text:
                     Color="white"
                     audio.tts("紙袋の色がわかりました。しろ色ですね。")
                     print("白です")
                     pub.publish(Color)#色をpublish
                     break
-                elif"茶色" in text:
+                elif"茶色" in text or "ちゃ" in text or "サイロ" in text or "カイロ" in text or "材料" in text:
                     Color="brown"
                     audio.tts("紙袋の色がわかりました。茶色ですね。")
                     print("茶色です")
