@@ -1,22 +1,23 @@
 # home_school_festival_2023
-(11.30時点)
+(12.01時点)
 
 ### >>注意<<
 `audio_new.py`および`generate_audio_new.py`を実行するためには、**speech_and_NLP**パッケージのインポートが必要です。<br>
 詳しくは[speech_and_NLP](https://github.com/rionehome/speech_and_NLP/tree/main)レポジトリを参照してください。
 
 ### 0. 必要なライブラリをインストールする
-このプロジェクトでは.envファイルで環境変数を管理しているため、以下のインストールが必要です。
+このプロジェクトでは以下のインストールが必要です。<br>
+python-dotenvは.envファイルを読み込むため、playsoundは音声ナビゲーションに利用します。
 ```bash
-pip intall python-dotenv
+pip intall python-dotenv playsound==1.3.0
 ```
 
 ### 1. .envファイルのパスを指定する
 以下の４ファイルで、.envファイルの**絶対パス**を指定する必要があります。
-- `audio.py`
+- `tts.py`
+- `stt.py`
 - `send_goal.py`
 - `generate_audio.py`
-- `generate_audio_new.py`
 
 以下の例のように書き換えてください。
 ```python
