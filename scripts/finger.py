@@ -3,6 +3,7 @@
 import rospy
 import time
 from std_msgs.msg import String
+from std_srvs.srv import SetBool, SetBoolResponse
 from hand_detect import finger_direction
 
 
@@ -33,37 +34,33 @@ def DetectFingerDirection(limit:int) -> str:
     
     return result
 
-def CreateFingerDirectionNode() -> None:
-    # Publishers
-    pub_dir = rospy.Publisher('topic_direction', String, queue_size=1)
-    pub_audio = rospy.Publisher('topic_audio', String, queue_size=1)
+def AskFingerDirection() -> None:
+    resp = SetBoolResponse()
 
-    pub_audio.publish("ask_direction")
-    time.sleep(3)   # Wait for the audio to stop
+    pub_tts.publish("ask_direction")
+    time.sleep(3)
 
-    boolean:str = 'no'
-    while(boolean == 'no'):
-        result = DetectFingerDirection(limit=50)
-        pub_audio.publish('start_yes')
-        boolean = rospy.wait_for_message('topic_end_yes', String, timeout=None)
+    result = DetectFingerDirection(limit=50)
+    if(result == 'left'):
+        resp.message = "left"
+        pub_tts.publish("info_target1")
+    elif(result == 'right'):
+        resp.message = "right"
+        pub_tts.publish("info_target2")
+    time.sleep(2)
 
-    rospy.loginfo(f"[Debug] Set direction to: {result}")
+    resp.success = True
+    rospy.loginfo(f"[Debug] Set direction to: {resp.message}")
 
-    try:
-        pub_dir.publish(result) # Publish a topic without waiting for the subscriber being established
-    except Exception as e: 
-        rospy.loginfo(f"[Error] Exception occurred: {e}")
-
-    return
-
-def main() -> None:
-    rospy.init_node('finger_node', anonymous=True)
-    rospy.Subscriber("topic_camera", String, CreateFingerDirectionNode)
-    rospy.spin()
+    return resp
 
 if __name__ == '__main__':
     try:
-        main()
+        rospy.init_node('finger_node', anonymous=True)
+        pub_tts = rospy.Publisher('topic_tts', String, queue_size=1)
+        srv = rospy.Service('srv_init_camera', SetBool, AskFingerDirection)
+        print('finger_node: ready')
+        rospy.spin()
     except rospy.ROSInterruptException:
         pass
 
