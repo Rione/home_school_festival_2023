@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-ENV_PATH = ""
+ENV_PATH = "/home/yuko001/catkin_ws/src/home_school_festival_2023/.env"
 
 import rospy
 import time
@@ -41,7 +41,7 @@ def SpeechRecognition() -> str:
     
     return color
 
-def AskWhichColor() -> None:
+def AskWhichColor(_) -> None:
     resp = SetBoolResponse()
 
     boolean: bool = False
@@ -62,7 +62,7 @@ def AskWhichColor() -> None:
         pub_tts.publish("ask_yes_or_no")
         time.sleep(0.5)
 
-        boolean = AskYesOrNo(internal=True)
+        boolean = AskYesOrNo("g",internal=True)
         
     resp.success = True
     rospy.loginfo(f"[Debug] Set color to: '{color}'")

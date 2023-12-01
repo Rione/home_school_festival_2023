@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-ENV_PATH = ""
+ENV_PATH = "/home/yuko001/catkin_ws/src/home_school_festival_2023/.env"
 
 import rospy
 import os

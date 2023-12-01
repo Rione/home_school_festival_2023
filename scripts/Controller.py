@@ -46,7 +46,7 @@ class Controller():
         self.color = resp.message
         rospy.loginfo(f"[Debug] topic_color received: {self.color}")  
 
-        return
+        return 
 
     def PublishTopicMove(self, target):
         """

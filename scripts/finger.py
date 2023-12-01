@@ -34,7 +34,7 @@ def DetectFingerDirection(limit:int) -> str:
     
     return result
 
-def AskFingerDirection() -> None:
+def AskFingerDirection(_) -> None:
     resp = SetBoolResponse()
 
     pub_tts.publish("ask_direction")
