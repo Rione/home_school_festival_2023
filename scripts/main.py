@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import keyboard
 import rospy
 import time
 from std_msgs.msg import String
@@ -19,7 +20,7 @@ def res_check():
     audio.tts("受け渡しは終わりましたか")
     while(1):
         res=audio.stt()#紙袋受け渡し/受け取り確認
-        if "はい" in res:
+        if "はい" in res or keyboard.is_pressed("a"):
             break
 
 if __name__ == '__main__':
