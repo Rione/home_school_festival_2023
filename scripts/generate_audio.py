@@ -4,7 +4,7 @@
 import env
 from online_audio_kit import AudioKit
 
-PREFIX = env.VOICE_PATH
+PREFIX = env.VOICE_PATH + "/"
 
 audio = AudioKit('ja')
 audio.tts("しろ色と茶色、どちらの紙袋をお持ちしましょうか。", mode="gen", path=PREFIX + "ask_color.mp3")
