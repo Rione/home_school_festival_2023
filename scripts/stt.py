@@ -1,19 +1,12 @@
 #!/usr/bin/env python3
 
-ENV_PATH = "/home/yuko001/catkin_ws/src/home_school_festival_2023/.env"
-
 import rospy
 import time
-from dotenv import load_dotenv
 from std_msgs.msg import String
 from std_srvs.srv import SetBool, SetBoolResponse
 from online_audio_kit import AudioKit
 
 
-# pub_color = rospy.Publisher('topic_color', String, queue_size=1)
-# pub_bool = rospy.Publisher('topic_end_yes', String, queue_size=1)
-
-load_dotenv(dotenv_path=ENV_PATH)
 # Create an instance of AudioKit
 AUDIO = AudioKit('ja') # Option : AudioKit(language= 'ja' | 'en', openai_api_key=str)
 
