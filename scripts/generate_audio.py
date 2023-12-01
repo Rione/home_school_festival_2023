@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
 
-ENV_PATH = "/home/yuko001/catkin_ws/src/home_school_festival_2023/.env"
-
 # Run this program to generate voice data as mp3.
-import os
-from dotenv import load_dotenv
+import env
 from online_audio_kit import AudioKit
 
-load_dotenv(dotenv_path=ENV_PATH)
-PREFIX = os.getenv('VOICE_PATH')
+PREFIX = env.VOICE_PATH
 
 audio = AudioKit('ja')
 audio.tts("しろ色と茶色、どちらの紙袋をお持ちしましょうか。", mode="gen", path=PREFIX + "ask_color.mp3")
