@@ -1,21 +1,17 @@
 #!/usr/bin/env python3
 
-ENV_PATH = ""
-
 import rospy
 import actionlib
 import numpy as np
-import os
-from dotenv import load_dotenv
+import env
 from std_msgs.msg import String
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 
 
-load_dotenv(dotenv_path=ENV_PATH)
 GOAL_POS = [
-    [os.getenv("ORIGIN_X"), os.getenv("ORIGIN_Y"), os.getenv("ORIGIN_Z") ],  # Origin
-    [os.getenv("TARGET1_X"), os.getenv("TARGET1_Y"), os.getenv("TARGET1_Z") ],  # Target1
-    [os.getenv("TARGET2_X"), os.getenv("TARGET2_Y"), os.getenv("TARGET2_Z") ],  # Target2
+    env.ORIGIN,  # Origin
+    env.TARGET1,  # Target1
+    env.TARGET2,  # Target2
 ]
 
 def move_base_client(x, y, yaw):
