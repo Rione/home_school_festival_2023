@@ -43,10 +43,8 @@ def AskFingerDirection(_) -> None:
     result = DetectFingerDirection(limit=50)
     if(result == 'left'):
         resp.message = "left"
-        pub_tts.publish("info_target1")
     elif(result == 'right'):
         resp.message = "right"
-        pub_tts.publish("info_target2")
     time.sleep(3)
 
     resp.success = True
