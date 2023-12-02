@@ -102,7 +102,7 @@ class Controller():
             self.pub_tts.publish('ask_brown')
         time.sleep(2)
 
-        self.pub_tts('check_place')
+        self.pub_tts.publish('check_place')
         time.sleep(3)
 
         try:
