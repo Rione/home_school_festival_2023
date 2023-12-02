@@ -96,10 +96,14 @@ class Controller():
         rospy.loginfo('[Info] Waiting for the server.')
         rospy.wait_for_service('srv_init_audio')
 
-        if (self.color == 'white'):
+        if(self.color == 'white'):
             self.pub_tts.publish('ask_white')
         elif(self.color == 'brown'):
             self.pub_tts.publish('ask_brown')
+        elif(self.color == 'yellow'):
+            self.pub_tts.publish('ask_yellow')
+        elif(self.color == 'red'):
+            self.pub_tts.publish('ask_red')
         time.sleep(2)
 
         self.pub_tts.publish('check_place')
