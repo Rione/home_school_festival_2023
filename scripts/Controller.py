@@ -130,7 +130,7 @@ class Controller():
         rospy.loginfo('[Info] Waiting for the server.')
         rospy.wait_for_service('srv_init_audio')
 
-        self.pub_tts.publish("ask_bag")
+        self.pub_tts.publish("info_bag")
         time.sleep(2)
 
         self.pub_tts.publish("check_receive")
