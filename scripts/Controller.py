@@ -68,11 +68,11 @@ class Controller():
         Publish topic_move; move to the target
         """
         if(target == 'origin'): 
-            self.pub_tts.publish("info_move_origin")
+            self.pub_tts.publish("info_origin")
         elif(target == 'target1'): 
-            self.pub_tts.publish("info_move_target")
+            self.pub_tts.publish("info_target1")
         elif(target == 'target2'): 
-            self.pub_tts.publish("info_move_target")
+            self.pub_tts.publish("info_target2")
         else:
             rospy.loginfo("[Error] Invalid target given.")
         time.sleep(2)
