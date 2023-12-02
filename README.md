@@ -10,16 +10,11 @@
 ```bash
 pip install -r requirements.txt
 ```
-
-### 1. voiceディレクトリを作成する
-`home_school_festival_2023`内に、`voice`ディレクトリがあることを確認してください。<br>
-`home_school_festival_2023`内であればどこでも動作します。なければ、`mkdir voice`で作成してください。
-
-### 2. env.pyを書き換える
+### 1. env.pyを書き換える
 `VOICE_PATH`には、`voice`ディレクトリの**絶対パス**を指定する必要があります。(最後のスラッシュ不要)<br>
 また、目標地点への座標を指定します。`[X, Y, Z]`となるように数値を入力してください。
 
-### 3. 音声ファイルを生成する
+### 2. 音声ファイルを生成する
 読み上げ機能に使われる音声ファイル(.mp3)を生成してください。<br>
 以下のコマンドを実行して、必要な音声ファイルを生成できます。
 ```bash
@@ -33,7 +28,7 @@ cd ~/catkin_ws/src/home_school_festival_2023/scripts
 ```
 生成された音声ファイルは、`voice`ディレクトリに格納されます。
 
-### 4. 読み込むmapデータを指定する
+### 3. 読み込むmapデータを指定する
 launchファイル中の以下の記述を確認します。
 ```xml
 <include file="$(find nav_lecture)/launch/navigation.launch" >
@@ -43,7 +38,7 @@ launchファイル中の以下の記述を確認します。
 ```
 `value=`の後に、使用するmapデータの**絶対パス**を指定してください。
 
-### 5. launchファイルを実行する
+### 4. launchファイルを実行する
 launchファイルの起動には、次のコマンドを実行してください。
 ```bash
 roslaunch home_school_festival_2023 test.launch
