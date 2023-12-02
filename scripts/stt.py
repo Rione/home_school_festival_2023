@@ -10,26 +10,32 @@ from online_audio_kit import AudioKit
 # Create an instance of AudioKit
 AUDIO = AudioKit('ja') # Option : AudioKit(language= 'ja' | 'en', openai_api_key=str)
 
+def CheckIfTextInclude(text:str, words) -> bool:
+    for word in words:
+        bool = word in text
+        if(bool):
+            return True
+    return False
+
 def SpeechRecognition() -> str:
     color:str = None
-    words_white = set(["しろ","白"])
-    words_brown = set(["ちゃ","茶","サイロ"])
-    words_yellow = set(["きいろ","黄色"])
-    words_red = set(["あか","赤"])
+    words_white = ["しろ","白"]
+    words_brown = ["ちゃ","茶","サイロ"]
+    words_yellow = ["きいろ","黄色"]
+    words_red = ["あか","赤"]
 
     try:
         for text in AUDIO.vosk():
-            text = set(text)
-            if(not words_white.isdisjoint(text)):
+            if(CheckIfTextInclude(text, words_white)):
                 color = 'white'
                 break
-            elif(not words_brown.isdisjoint(text)):
+            elif(CheckIfTextInclude(text, words_brown)):
                 color = 'brown'
                 break
-            elif(not words_yellow.isdisjoint(text)):
+            elif(CheckIfTextInclude(text, words_yellow)):
                 color = 'yellow'
                 break
-            elif(not words_red.isdisjoint(text)):
+            elif(CheckIfTextInclude(text, words_red)):
                 color = 'red'
                 break
             else: continue
