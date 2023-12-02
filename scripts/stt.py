@@ -14,6 +14,8 @@ def SpeechRecognition() -> str:
     color:str = None
     words_white = set(["しろ","白"])
     words_brown = set(["ちゃ","茶","サイロ"])
+    words_yellow = set(["きいろ","黄色"])
+    words_red = set(["あか","赤"])
 
     try:
         for text in AUDIO.vosk():
@@ -23,6 +25,12 @@ def SpeechRecognition() -> str:
                 break
             elif(not words_brown.isdisjoint(text)):
                 color = 'brown'
+                break
+            elif(not words_yellow.isdisjoint(text)):
+                color = 'yellow'
+                break
+            elif(not words_red.isdisjoint(text)):
+                color = 'red'
                 break
             else: continue
         # if the for-loop ends up without break
@@ -38,7 +46,7 @@ def AskWhichColor() -> str:
     boolean: bool = False
     while not (boolean):
         pub_tts.publish("ask_color")
-        time.sleep(2)
+        time.sleep(4)
 
         result = SpeechRecognition()
         time.sleep(2)
@@ -47,6 +55,10 @@ def AskWhichColor() -> str:
             pub_tts.publish("info_white")
         elif(result == 'brown'):
             pub_tts.publish("info_brown")
+        elif(result == 'yellow'):
+            pub_tts.publish("info_yellow")
+        elif(result == 'red'):
+            pub_tts.publish("info_red")
         time.sleep(2)
 
         pub_tts.publish("ask_yes_or_no")
