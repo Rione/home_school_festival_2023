@@ -47,7 +47,7 @@ def AskFingerDirection(_) -> None:
     elif(result == 'right'):
         resp.message = "right"
         pub_tts.publish("info_target2")
-    time.sleep(2)
+    time.sleep(3)
 
     resp.success = True
     rospy.loginfo(f"[Debug] Set direction to: {resp.message}")
