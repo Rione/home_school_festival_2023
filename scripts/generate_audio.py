@@ -23,7 +23,7 @@ audio.tts("1番目標へ移動します。", mode="gen", path=PREFIX + "info_tar
 audio.tts("2番目標へ移動します。", mode="gen", path=PREFIX + "info_target2.mp3")
 audio.tts("よろしいですか。", mode="gen", path=PREFIX + "ask_yes_or_no.mp3")
 audio.tts("置いたら、はい、とお知らせください。", mode="gen", path=PREFIX + "check_place.mp3")
-audio.tts("受け取ったら、はい、とお知らせください。", mode="gen", path=PREFIX + "check_recieve.mp3")
+audio.tts("受け取ったら、はい、とお知らせください。", mode="gen", path=PREFIX + "check_receive.mp3")
 audio.tts("わかりました。", mode="gen", path=PREFIX + "info_acknowledged.mp3")
 audio.tts("目標地点へ到達しました。", mode="gen", path=PREFIX + "info_arrive_target.mp3")
 audio.tts("すみません、聞き取れませんでした。もう一度言ってください。", mode="gen", path=PREFIX + "err_audio.mp3")
