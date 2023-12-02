@@ -34,46 +34,41 @@ def SpeechRecognition() -> str:
     
     return color
 
-def AskWhichColor(_) -> None:
-    resp = SetBoolResponse()
-
+def AskWhichColor() -> str:
     boolean: bool = False
     while not (boolean):
         pub_tts.publish("ask_color")
         time.sleep(2)
 
-        color = SpeechRecognition()
-        resp.message = color
+        result = SpeechRecognition()
         time.sleep(2)
 
-        if(color == 'white'):
+        if(result == 'white'):
             pub_tts.publish("info_white")
-        elif(color == 'brown'):
+        elif(result == 'brown'):
             pub_tts.publish("info_brown")
         time.sleep(2)
 
         pub_tts.publish("ask_yes_or_no")
         time.sleep(0.5)
 
-        boolean = AskYesOrNo("g",internal=True)
+        boolean = AskYesOrNo()
         
-    resp.success = True
-    rospy.loginfo(f"[Debug] Set color to: '{color}'")
+    rospy.loginfo(f"[Debug] Set color to: '{result}'")
     pub_tts.publish("info_acknowledged")
     time.sleep(1)
 
-    return resp
+    return result
 
-def AskYesOrNo(_, internal:bool=False) -> bool:
-    resp = SetBoolResponse()
-
+def AskYesOrNo() -> bool:
+    result = None
     try:
         for text in AUDIO.vosk():
             if("はい" in text):
-                resp.success = True
+                result = True
                 break
             elif("いいえ" in text):
-                resp.success = False
+                result = False
                 break
             else: continue
         # if the for-loop ends up without break
@@ -83,16 +78,24 @@ def AskYesOrNo(_, internal:bool=False) -> bool:
     except Exception as e:
         rospy.loginfo(f'[Error] Exception occurred: {e}')
 
-    resp.message= "True or False"
-    if(internal): return resp.success
-    else: return resp
+    return result
+
+def Router(signal):
+    resp = SetBoolResponse()
+    if(signal):
+        resp.message = AskWhichColor()
+        resp.success = True
+    else:
+        resp.success = AskYesOrNo()
+        resp.message = "yes or no"
+
+    return resp
 
 if __name__ == '__main__':
     try:
         rospy.init_node('audio_node', anonymous=True)
         pub_tts = rospy.Publisher('topic_tts', String, queue_size=1)
-        srv1 = rospy.Service('srv_init_audio', SetBool, AskWhichColor)
-        srv2 = rospy.Service("srv_yes_or_no", SetBool, AskYesOrNo)
+        srv = rospy.Service('srv_init_audio', SetBool, Router)
         print("stt_node: ready")
         rospy.spin() 
     except rospy.ROSInterruptException:
