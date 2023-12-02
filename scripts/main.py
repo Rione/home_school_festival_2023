@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #!/usr/bin/env python3
 
 from Controller import Controller
@@ -40,5 +39,3 @@ if __name__ == '__main__':
         main()
     except Exception as e:
         print(f"[Error] Exception occurred: {e}")
-=======
->>>>>>> main

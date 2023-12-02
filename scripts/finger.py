@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #!/usr/bin/env python3
 
 import rospy
@@ -46,7 +45,7 @@ def AskFingerDirection(_) -> None:
         resp.message = "left"
     elif(result == 'right'):
         resp.message = "right"
-    time.sleep(3)
+    time.sleep(1)
 
     resp.success = True
     rospy.loginfo(f"[Debug] Set direction to: {resp.message}")
@@ -63,5 +62,3 @@ if __name__ == '__main__':
     except rospy.ROSInterruptException:
         pass
 
-=======
->>>>>>> main

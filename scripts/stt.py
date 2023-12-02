@@ -2,13 +2,16 @@
 
 import rospy
 import time
+import env
 from std_msgs.msg import String
 from std_srvs.srv import SetBool, SetBoolResponse
 from online_audio_kit import AudioKit
 
 
 # Create an instance of AudioKit
-AUDIO = AudioKit('ja') # Option : AudioKit(language= 'ja' | 'en', openai_api_key=str)
+vosk_model_name = env.MODEL_NAME if(env.MODEL_NAME != "") else None
+vosk_model_path = env.MODEL_PATH if(env.MODEL_PATH != "") else None
+AUDIO = AudioKit('ja', vosk_model_name=vosk_model_name, vosk_model_path=vosk_model_path)
 
 def CheckIfTextInclude(text:str, words) -> bool:
     for word in words:
@@ -55,7 +58,7 @@ def AskWhichColor() -> str:
         time.sleep(4)
 
         result = SpeechRecognition()
-        time.sleep(2)
+        time.sleep(0.5)
 
         if(result == 'white'):
             pub_tts.publish("info_white")
@@ -68,7 +71,7 @@ def AskWhichColor() -> str:
         time.sleep(2)
 
         pub_tts.publish("ask_yes_or_no")
-        time.sleep(0.5)
+        time.sleep(3)
 
         boolean = AskYesOrNo()
         
