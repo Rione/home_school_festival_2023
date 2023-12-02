@@ -3,12 +3,15 @@
 import rospy
 import time
 from std_msgs.msg import String
+from open_manipulator_x_pkg.srv import MoveArm
 from online_audio_kit import AudioKit
 audio = AudioKit(language="ja")
 rospy.init_node("main_node",anonymous=True)
 pub_audio = rospy.Publisher("topic_start_audio", String, queue_size=1)
 pub_finger = rospy.Publisher("topic_start_finger", String, queue_size=1)
 pub_send_goal=rospy.Publisher("topic_move", String, queue_size=1)
+control_arm = rospy.ServiceProxy("/move_arm", MoveArm)
+
 rospy.Subscriber("topic_color",String,)
 rospy.Subscriber("topic_direction",String,)
 rospy.Subscriber("topic_fin",String,)
@@ -36,6 +39,10 @@ def res_check():
 
 if __name__ == '__main__':
     try:
+        # testing arm
+        rospy.wait_for_service("/move_arm")
+        control_arm(0, 0, 0, 0)
+
         for i in range(10):
             pub_audio.publish(PUB)#audio起動
             time.sleep(0.1)
