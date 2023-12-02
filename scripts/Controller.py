@@ -22,15 +22,32 @@ class Controller():
         self.pub_mov = rospy.Publisher('topic_move', String, queue_size=1)
         self.pub_tts = rospy.Publisher('topic_tts', String, queue_size=1)
 
+    def WaitForSettingUp(self):
+        rospy.loginfo('[Info] Waiting for the server.')
+        rospy.wait_for_service('srv_init_audio')
+
+        self.pub_tts.publish("ask_config")
+        time.sleep(4)
+
+        try:
+            while(True):
+                service_call = rospy.ServiceProxy('srv_init_audio', SetBool)
+                resp = service_call(False) # YesOrNo
+                if(resp.success == True): break
+        except rospy.ServiceException as e:
+            rospy.loginfo("[Error] Service call failed: %s" % e)
+        time.sleep(5)
+        rospy.loginfo("[Info] Promgram started.")
+
+        return
+
     def ListenToTopicDirection(self):
         rospy.wait_for_service('srv_init_camera')
         try:
             service_call = rospy.ServiceProxy('srv_init_camera', SetBool)
-            resp = service_call(True)
+            resp = service_call(True) 
         except rospy.ServiceException as e:
             rospy.loginfo("[Error] Service call failed: %s" % e)
-        rospy.loginfo("[Debug] Waiting for topic_direction to be published.")
-        # self.direction = rospy.wait_for_message('topic_direction', String, timeout=None)
         self.direction = resp.message
         rospy.loginfo(f"[Debug] topic_direction received: {self.direction}") 
 
@@ -38,11 +55,9 @@ class Controller():
         rospy.wait_for_service('srv_init_audio')
         try:
             service_call = rospy.ServiceProxy('srv_init_audio', SetBool)
-            resp = service_call(True)
+            resp = service_call(True) # Color
         except rospy.ServiceException as e:
             rospy.loginfo("[Error] Service call failed: %s" % e)
-        rospy.loginfo("[Debug] Waiting for topic_color to be published.")
-        # self.color = rospy.wait_for_message('topic_color', String, timeout=None)
         self.color = resp.message
         rospy.loginfo(f"[Debug] topic_color received: {self.color}")  
 
@@ -79,7 +94,7 @@ class Controller():
         time.sleep(2)
 
         rospy.loginfo('[Info] Waiting for the server.')
-        rospy.wait_for_service('srv_yes_or_no')
+        rospy.wait_for_service('srv_init_audio')
 
         if (self.color == 'white'):
             self.pub_tts.publish('ask_white')
@@ -92,8 +107,8 @@ class Controller():
 
         try:
             while(True):
-                service_call = rospy.ServiceProxy('srv_yes_or_no', SetBool)
-                resp = service_call(True)
+                service_call = rospy.ServiceProxy('srv_init_audio', SetBool)
+                resp = service_call(False) # YesOrNo
                 if(resp.success == True): break
         except rospy.ServiceException as e:
             rospy.loginfo("[Error] Service call failed: %s" % e)
@@ -109,7 +124,7 @@ class Controller():
         time.sleep(2)
 
         rospy.loginfo('[Info] Waiting for the server.')
-        rospy.wait_for_service('srv_yes_or_no')
+        rospy.wait_for_service('srv_init_audio')
 
         self.pub_tts.publish("ask_bag")
         time.sleep(2)
@@ -119,8 +134,8 @@ class Controller():
 
         try:
             while(True):
-                service_call = rospy.ServiceProxy('srv_yes_or_no', SetBool)
-                resp = service_call(True)
+                service_call = rospy.ServiceProxy('srv_init_audio', SetBool)
+                resp = service_call(False) # YesOrNo
                 if(resp.success == True): break
         except rospy.ServiceException as e:
             rospy.loginfo("[Error] Service call failed: %s" % e)
