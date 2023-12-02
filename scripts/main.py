@@ -7,6 +7,10 @@ def main():
     # Create an instance / node
     ctrl: Controller = Controller()
 
+    # Wait for the current position to be given to Rviz
+    print('[Info] Specify the current position of the turtlebot.')
+    ctrl.WaitForSettingUp()
+
     # Wait for color and direction to be given
     print('[Info] Listening to topic_color and topic_direction.')
     ctrl.ListenToTopicColor()
