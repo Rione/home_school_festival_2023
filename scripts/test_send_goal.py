@@ -10,9 +10,9 @@ PUB="***"
 
 
 GOAL_POS=[0,0,0]#初期化
-Target1=[-2.9,0.135,0.002]#右の人
-Target2=[0.617,-0.271,0.002]#左の人
-Origin=[0.220,0.715,0.002]#もといた場所
+Target1=[-1.3836,-2.3267,-0.0014]#右の人
+Target2=[2.8136,-1.8171,0.0064]#左の人
+Origin=[0.3993,-0.0221,-0.0014]#もといた場所
 
 rospy.init_node("test_send_goal_node",anonymous=True)
 pub=rospy.Publisher("topic_fin", String, queue_size=1)
@@ -31,8 +31,8 @@ def set_goal(target):#受け取ったトピックに合わせて目標設定
     print(GOAL_POS)
     print(f"{target}を開始します")
     print(f"{GOAL_POS[0], GOAL_POS[1], GOAL_POS[2]}に移動します")
-    #result = move_base_client(GOAL_POS[0], GOAL_POS[1], GOAL_POS[2])#デバッグ時コメントアウト
-    #rospy.loginfo(result)#デバッグ時コメントアウト
+    result = move_base_client(GOAL_POS[0], GOAL_POS[1], GOAL_POS[2])#デバッグ時コメントアウト
+    rospy.loginfo(result)#デバッグ時コメントアウト
     time.sleep(0.5)
     print("fin送信")
     for i in range(10):
