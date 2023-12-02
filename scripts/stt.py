@@ -80,9 +80,9 @@ def AskYesOrNo() -> bool:
 
     return result
 
-def Router(signal):
+def Router(data):
     resp = SetBoolResponse()
-    if(signal):
+    if(data.data):
         resp.message = AskWhichColor()
         resp.success = True
     else:
