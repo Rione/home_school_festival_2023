@@ -26,7 +26,7 @@ class Controller():
         rospy.wait_for_service('srv_init_audio')
 
         self.pub_tts.publish("ask_config")
-        time.sleep(4)
+        rospy.wait_for_message("topic_tts_finished", String, timeout=None)
 
         try:
             while(True):
@@ -36,11 +36,12 @@ class Controller():
         except rospy.ServiceException as e:
             rospy.loginfo("[Error] Service call failed: %s" % e)
         self.pub_tts.publish("info_acknowledged")
-        time.sleep(5)
+        rospy.wait_for_message("topic_tts_finished", String, timeout=None)
+        time.sleep(2)
 
         rospy.loginfo("[Info] Promgram started.")
         self.pub_tts.publish("start")
-        time.sleep(2)
+        rospy.wait_for_message("topic_tts_finished", String, timeout=None)
 
         return
 
@@ -78,7 +79,7 @@ class Controller():
             self.pub_tts.publish("info_target2")
         else:
             rospy.loginfo("[Error] Invalid target given.")
-        time.sleep(2)
+        rospy.wait_for_message("topic_tts_finished", String, timeout=None)
 
         self.pub_mov.publish(target)
         # Wait until the robot arrives at the target location
@@ -87,7 +88,7 @@ class Controller():
 
         if(target == 'origin'):
             self.pub_tts.publish("end")
-            time.sleep(2)
+            rospy.wait_for_message("topic_tts_finished", String, timeout=None)
 
         return
 
@@ -99,7 +100,7 @@ class Controller():
         rospy.loginfo('[Info] Arrived at the 1st target.')
         
         self.pub_tts.publish("info_arrive_target")
-        time.sleep(2)
+        rospy.wait_for_message("topic_tts_finished", String, timeout=None)
 
         rospy.loginfo('[Info] Waiting for the server.')
         rospy.wait_for_service('srv_init_audio')
@@ -112,10 +113,10 @@ class Controller():
             self.pub_tts.publish('ask_yellow')
         elif(self.color == 'red'):
             self.pub_tts.publish('ask_red')
-        time.sleep(2)
+        rospy.wait_for_message("topic_tts_finished", String, timeout=None)
 
         self.pub_tts.publish('check_place')
-        time.sleep(3)
+        rospy.wait_for_message("topic_tts_finished", String, timeout=None)
 
         try:
             while(True):
@@ -133,16 +134,16 @@ class Controller():
         """
         rospy.loginfo('[Info] Arrived at the 2nd target.')
         self.pub_tts.publish("info_arrive_target")
-        time.sleep(2)
+        rospy.wait_for_message("topic_tts_finished", String, timeout=None)
 
         rospy.loginfo('[Info] Waiting for the server.')
         rospy.wait_for_service('srv_init_audio')
 
         self.pub_tts.publish("info_bag")
-        time.sleep(2)
+        rospy.wait_for_message("topic_tts_finished", String, timeout=None)
 
         self.pub_tts.publish("check_receive")
-        time.sleep(2)
+        rospy.wait_for_message("topic_tts_finished", String, timeout=None)
 
         try:
             while(True):
