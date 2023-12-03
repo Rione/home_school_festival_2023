@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import rospy
-import time
 from std_msgs.msg import String
 from std_srvs.srv import SetBool, SetBoolResponse
 from hand_detect import finger_direction
