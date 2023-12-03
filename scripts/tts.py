@@ -2,15 +2,9 @@
 
 import rospy
 import env
-import time
 from std_msgs.msg import String
 from playsound import playsound
-from mutagen.mp3 import MP3
 
-
-def GetDurationOfMP3(path) -> int:
-    audio = MP3(path)
-    return audio.info.length
 
 def TextToSpeech(data) -> None:
     rospy.loginfo("[Debug] tts called.")
@@ -20,8 +14,6 @@ def TextToSpeech(data) -> None:
         playsound(path)
     except Exception as e:
         rospy.loginfo(f"[Error] Exception occurred: {e}")
-    time.sleep(GetDurationOfMP3(path) + 1)
-
     pub_tts_fin.publish("wait")
 
     return
