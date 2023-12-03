@@ -40,7 +40,7 @@ class Controller():
 
         rospy.loginfo("[Info] Promgram started.")
         self.pub_tts.publish("start")
-        time.sleep(2)
+        time.sleep(4)
 
         return
 
