@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import rospy
+import time
 from std_msgs.msg import String
 from std_srvs.srv import SetBool, SetBoolResponse
 from hand_detect import finger_direction
@@ -44,7 +45,7 @@ def AskFingerDirection(_) -> None:
         resp.message = "left"
     elif(result == 'right'):
         resp.message = "right"
-    rospy.wait_for_message("topic_tts_finished", String, timeout=None)
+    time.sleep(0.5)
 
     resp.success = True
     rospy.loginfo(f"[Debug] Set direction to: {resp.message}")
