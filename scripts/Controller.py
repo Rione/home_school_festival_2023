@@ -92,7 +92,6 @@ class Controller():
 
         return
 
-    
     def ReceiveTheBag(self):
         """
         Handle the arrival at the 1st target.
