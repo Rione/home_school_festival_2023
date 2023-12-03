@@ -38,14 +38,14 @@ def AskFingerDirection(_) -> None:
     resp = SetBoolResponse()
 
     pub_tts.publish("ask_direction")
-    time.sleep(3)
+    rospy.wait_for_message("topic_tts_finished", String, timeout=None)
 
     result = DetectFingerDirection(limit=50)
     if(result == 'left'):
         resp.message = "left"
     elif(result == 'right'):
         resp.message = "right"
-    time.sleep(1)
+    rospy.wait_for_message("topic_tts_finished", String, timeout=None)
 
     resp.success = True
     rospy.loginfo(f"[Debug] Set direction to: {resp.message}")
