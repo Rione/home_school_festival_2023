@@ -1,4 +1,3 @@
-mutagen
 playsound==1.3.0
 git+https://github.com/rionehome/finger_direction
 git+https://github.com/rionehome/online_audio_kit
