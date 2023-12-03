@@ -45,7 +45,6 @@ def SpeechRecognition() -> str:
         # if the for-loop ends up without break
         else: 
             pub_tts.publish("err_audio")
-            time.sleep(3)
     except Exception as e:
         rospy.loginfo(f'[Error] Exception occurred: {e}')
     
