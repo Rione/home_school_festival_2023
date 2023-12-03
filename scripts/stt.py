@@ -45,6 +45,7 @@ def SpeechRecognition() -> str:
         # if the for-loop ends up without break
         else: 
             pub_tts.publish("err_audio")
+            rospy.wait_for_message("topic_tts_finished", String, timeout=None)
     except Exception as e:
         rospy.loginfo(f'[Error] Exception occurred: {e}')
     
@@ -54,7 +55,7 @@ def AskWhichColor() -> str:
     boolean: bool = False
     while not (boolean):
         pub_tts.publish("ask_color")
-        time.sleep(4)
+        rospy.wait_for_message("topic_tts_finished", String, timeout=None)
 
         result = SpeechRecognition()
         time.sleep(0.5)
@@ -67,16 +68,16 @@ def AskWhichColor() -> str:
             pub_tts.publish("info_yellow")
         elif(result == 'red'):
             pub_tts.publish("info_red")
-        time.sleep(2)
+        rospy.wait_for_message("topic_tts_finished", String, timeout=None)
 
         pub_tts.publish("ask_yes_or_no")
-        time.sleep(3)
+        rospy.wait_for_message("topic_tts_finished", String, timeout=None)
 
         boolean = AskYesOrNo()
         
     rospy.loginfo(f"[Debug] Set color to: '{result}'")
     pub_tts.publish("info_acknowledged")
-    time.sleep(1)
+    rospy.wait_for_message("topic_tts_finished", String, timeout=None)
 
     return result
 
@@ -94,7 +95,7 @@ def AskYesOrNo() -> bool:
         # if the for-loop ends up without break
         else: 
             pub_tts.publish("err_audio")
-            time.sleep(3)
+            rospy.wait_for_message("topic_tts_finished", String, timeout=None)
     except Exception as e:
         rospy.loginfo(f'[Error] Exception occurred: {e}')
 
