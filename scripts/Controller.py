@@ -2,8 +2,6 @@ import rospy
 import time
 from std_msgs.msg import String
 from std_srvs.srv import SetBool
-from open_manipulator_x_pkg.srv import MoveArm
-
 
 class Controller():
     """
@@ -93,6 +91,7 @@ class Controller():
 
         return
 
+    
     def ReceiveTheBag(self):
         """
         Handle the arrival at the 1st target.
@@ -105,32 +104,24 @@ class Controller():
         rospy.loginfo('[Info] Waiting for the server.')
         rospy.wait_for_service('srv_init_audio')
 
-        # Arm
-        rospy.wait_for_service('move_arm')
+        if(self.color == 'white'):
+            self.pub_tts.publish('ask_white')
+        elif(self.color == 'brown'):
+            self.pub_tts.publish('ask_brown')
+        elif(self.color == 'yellow'):
+            self.pub_tts.publish('ask_yellow')
+        elif(self.color == 'red'):
+            self.pub_tts.publish('ask_red')
+        time.sleep(2)
+
+        self.pub_tts.publish('check_place')
+        time.sleep(3)
+
         try:
-            control_arm = rospy.ServiceProxy('move_arm', MoveArm)
-
-            if(self.color == 'white'):
-                self.pub_tts.publish('ask_white')
-            elif(self.color == 'brown'):
-                self.pub_tts.publish('ask_brown')
-            elif(self.color == 'yellow'):
-                self.pub_tts.publish('ask_yellow')
-            elif(self.color == 'red'):
-                self.pub_tts.publish('ask_red')
-            control_arm(0, 0, 0, 0)
-            time.sleep(2)
-
-            self.pub_tts.publish('check_place')
-            control_arm(30, 20, 30, 2)
-            time.sleep(3)
-
             while(True):
                 service_call = rospy.ServiceProxy('srv_init_audio', SetBool)
                 resp = service_call(False) # YesOrNo
                 if(resp.success == True): break
-            control_arm(0, 0, 0, 0)
-            time.sleep(2)
         except rospy.ServiceException as e:
             rospy.loginfo("[Error] Service call failed: %s" % e)
 
@@ -147,27 +138,18 @@ class Controller():
         rospy.loginfo('[Info] Waiting for the server.')
         rospy.wait_for_service('srv_init_audio')
 
-        # Arm
-        rospy.wait_for_service('move_arm')
+        self.pub_tts.publish("info_bag")
+        time.sleep(2)
+
+        self.pub_tts.publish("check_receive")
+        time.sleep(2)
+
         try:
-            control_arm = rospy.ServiceProxy('move_arm', MoveArm)
-
-            self.pub_tts.publish("info_bag")
-            control_arm(30, 20, 30, 2)
-            time.sleep(2)
-            
-            self.pub_tts.publish("check_receive")
-            time.sleep(2)
-
             while(True):
                 service_call = rospy.ServiceProxy('srv_init_audio', SetBool)
                 resp = service_call(False) # YesOrNo
                 if(resp.success == True): break
-            control_arm(0, 0, 0, 0)
-            time.sleep(2)
         except rospy.ServiceException as e:
             rospy.loginfo("[Error] Service call failed: %s" % e)
 
         return
-
-
