@@ -8,7 +8,6 @@
     <include file="$(find nav_lecture)/launch/navigation.launch" >
         <arg name="map_file" value="~/catkin_ws/src/home_school_festival_2023/map/bushitu.yaml"/>
     </include>
-    <include file="$(find open_manipulator_controller)/launch/open_manipulator_controller.launch" />
 
     <node pkg="home_school_festival_2023" name="stt_node" type="stt.py" output="screen"/>
     <node pkg="home_school_festival_2023" name="tts_node" type="tts.py" output="screen"/>
