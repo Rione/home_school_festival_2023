@@ -22,17 +22,7 @@ volumes:
 ただし、Linux環境であれば、多くの場合初期値のままでいけると思います。
 
 
-### 1. Dockerイメージを作成する(初回のみ)
-`Dockerfile`が存在するディレクトリに移動します。<br>
-そこで、以下のコマンドを実行します。
-```bash
-docker build .
-```
-これでDockerイメージが作成できます。<br>
-**10~20分程度**かかりますので、時間に余裕を持って実行してください。
-
-
-### 2. Dockerコンテナを起動する
+### 1. Dockerコンテナを起動する
 `docker-compose.yaml`が存在するディレクトリに移動します。<br>
 以下のコマンドを実行します。
 ```bash
@@ -41,14 +31,17 @@ docker compose up -d
 docker compose start -d
 ```
 これでDockerコンテナが起動します。<br>
-確認したい場合は、
+初回実行の場合は、Dockerイメージが先に作成されます。<br>
+イメージ作成には**10~20分程度**かかりますので、時間に余裕を持って実行してください。
+
+起動を確認したい場合は、
 ```bash
 docker container list
 ```
 を実行してください。
 
 
-### 3. catkin_wsの準備をする
+### 2. catkin_wsの準備をする
 以下のコマンドを実行してください。
 ```bash
 cd /root/catkin_ws && \
@@ -57,12 +50,20 @@ source devel/setup.bash
 ```
 
 
-### 4. env.pyを書き換える
+### 3. env.pyを書き換える
 `MODEL_NAME`で、使用したいVOSKモデルを指定できます。(任意)<br>
 VOSKモデルを使用することで高精度の音声認識が可能になる一方、約1GBのディスク容量と最大16GBのメモリを必要とします。<br>
 VOSKモデルの一覧は、こちらを参照:[VOSK Models](https://alphacephei.com/vosk/models)
 
 また、目標地点への座標を指定します。`[X, Y, Z]`となるように数値を入力してください。
+
+
+### 4. 音声ファイルを生成する
+以下のコマンドを実行してください。
+```bash
+cd /root/catkin_ws/home_school_festival_2023/scripts && \
+./generate_audio.py
+```
 
 
 ### 5. test.launchを書き換える
@@ -76,7 +77,7 @@ VOSKモデルの一覧は、こちらを参照:[VOSK Models](https://alphacephei
 この際、パス(`/root/map/`)は変更しないように注意してください。
 
 
-### 5. launchファイルを実行する
+### 6. launchファイルを実行する
 launchファイルの起動には、次のコマンドを実行してください。
 ```bash
 roslaunch home_school_festival_2023 test.launch
@@ -95,7 +96,7 @@ launchファイルは次のノードを起動します:
 - send_goal_node
 
 
-### 6. Dockerコンテナを終了・破棄する
+### 7. Dockerコンテナを終了・破棄する
 終了したい場合は、
 ```bash
 docker compose stop
