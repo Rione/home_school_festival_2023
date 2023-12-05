@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import rospy
-import env
 from std_msgs.msg import String
 from playsound import playsound
 
@@ -9,7 +8,7 @@ from playsound import playsound
 def TextToSpeech(data) -> None:
     rospy.loginfo("[Debug] tts called.")
     filename = data.data
-    path = env.VOICE_PATH + "/" + filename + ".mp3"
+    path = "/root/catkin_ws/src/home_school_festival_2023/voice/" + filename + ".mp3"
     try:
         playsound(path)
     except Exception as e:
