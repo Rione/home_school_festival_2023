@@ -10,8 +10,7 @@ from online_audio_kit import AudioKit
 
 # Create an instance of AudioKit
 vosk_model_name = env.MODEL_NAME if(env.MODEL_NAME != "") else None
-vosk_model_path = env.MODEL_PATH if(env.MODEL_PATH != "") else None
-AUDIO = AudioKit('ja', vosk_model_name=vosk_model_name, vosk_model_path=vosk_model_path)
+AUDIO = AudioKit('ja', vosk_model_name=vosk_model_name)
 
 def CheckIfTextInclude(text:str, words) -> bool:
     for word in words:
