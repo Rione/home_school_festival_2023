@@ -6,7 +6,7 @@
     <include file="$(find nav_lecture)/launch/minimal.launch" />
     <include file="$(find nav_lecture)/launch/rplidar.launch" />
     <include file="$(find nav_lecture)/launch/navigation.launch" >
-        <arg name="map_file" value="~/catkin_ws/src/home_school_festival_2023/map/bushitu.yaml"/>
+        <arg name="map_file" value="/root/map/map.yaml"/>
     </include>
 
     <node pkg="home_school_festival_2023" name="stt_node" type="stt.py" output="screen"/>
