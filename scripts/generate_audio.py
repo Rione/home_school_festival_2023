@@ -4,11 +4,10 @@
 import env
 from online_audio_kit import AudioKit
 
-PREFIX = env.VOICE_PATH + "/"
+PREFIX = "/root/catkin_ws/src/home_school_festival_2023/voice/"
 # Create an instance of AudioKit
 vosk_model_name = env.MODEL_NAME if(env.MODEL_NAME != "") else None
-vosk_model_path = env.MODEL_PATH if(env.MODEL_PATH != "") else None
-audio = AudioKit('ja', vosk_model_name=vosk_model_name, vosk_model_path=vosk_model_path)
+audio = AudioKit('ja', vosk_model_name=vosk_model_name)
 
 audio.tts("ナビゲーションを開始します。", mode="gen", path=PREFIX + "start.mp3")
 audio.tts("ロボットの現在地を指定してください。準備が完了したら、はい、とお知らせください。", mode="gen", path=PREFIX + "ask_config.mp3")
