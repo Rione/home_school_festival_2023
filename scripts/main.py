@@ -3,8 +3,7 @@
 from Controller import Controller
 
 
-def main():
-    # Create an instance / node
+def main(ctrl):
     ctrl: Controller = Controller()
 
     # Wait for the current position to be given to Rviz
@@ -31,11 +30,15 @@ def main():
     ctrl.PublishTopicMove('origin')
     print('[Info] topic_move published.')
 
+    ctrl.ResetCostMaps()
     print('[Info] main_node has been terminated.')
     
 
 if __name__ == '__main__':
+    # Create an instance / node
+    ctrl: Controller = Controller()
     try:
-        main()
+        main(ctrl)
     except Exception as e:
+        ctrl.ResetCostMaps()
         print(f"[Error] Exception occurred: {e}")
