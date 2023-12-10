@@ -1,7 +1,7 @@
 import rospy
 import time
 from std_msgs.msg import String
-from std_srvs.srv import SetBool
+from std_srvs.srv import SetBool, Empty
 
 class Controller():
     """
@@ -153,3 +153,13 @@ class Controller():
             rospy.loginfo("[Error] Service call failed: %s" % e)
 
         return
+
+    def ResetCostMaps(self):
+        rospy.wait_for_service('/move_base/clear_costmaps')
+
+        try:
+            clear_costmaps = rospy.ServiceProxy('/move_base/clear_costmaps', Empty)
+            clear_costmaps()
+            rospy.loginfo("Clear costmaps service called successfully.")
+        except rospy.ServiceException as e:
+            rospy.logerr("Failed to call clear costmaps service: %s" % e)
