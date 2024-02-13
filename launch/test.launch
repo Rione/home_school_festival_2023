@@ -1,12 +1,12 @@
 <launch>
-    <arg name="map_file" default="~/catkin_ws/src/home_school_festival_2023/map/bushitu.yaml"/>
+    <arg name="map_file" default="~/catkin_ws/src/home_school_festival_2023/map/banpaku2.yaml"/>
 
     <!-- Write code below  -->
 
     <include file="$(find nav_lecture)/launch/minimal.launch" />
     <include file="$(find nav_lecture)/launch/rplidar.launch" />
     <include file="$(find nav_lecture)/launch/navigation.launch" >
-        <arg name="map_file" value="~/catkin_ws/src/home_school_festival_2023/map/bushitu.yaml"/>
+        <arg name="map_file" value="/home/tokunaga/map/banpaku2.yaml"/>
     </include>
 
     <node pkg="home_school_festival_2023" name="stt_node" type="stt.py" output="screen"/>

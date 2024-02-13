@@ -16,8 +16,7 @@ DICT:str = (subprocess.run("find ~/catkin_ws/src/home_school_festival_2023 -name
 def CreateAudioProcessingNode():
     # Node and publisher
     rospy.init_node('audio_node', anonymous=True)
-    pub = rospy.Publisher('topic_color', String, queue_size=1)
-
+    pub = rospy.Publisher('tohttps://github.com/settings/organizations
     TextToSpeech('ask_color')
 
     color = None
